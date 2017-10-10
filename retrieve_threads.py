@@ -48,17 +48,28 @@ for event, elem in ET.iterparse('data/uncompressed/Posts.xml'):
             if num_of_valid_threads >= threads_threshold:
                 break
 
-# Delete threads that are not valid.
+# Delete threads that are not valid and analyze the dataset.
 num_of_posts = 0
-for questionId, posts in list(threads.items()):
-    if len(posts) < 2:
-        del threads[questionId]
+thread_stats = {}
+for question_id, posts in list(threads.items()):
+    posts_in_thread = len(posts)
+
+    if posts_in_thread < 2:
+        del threads[question_id]
     else:
-        num_of_posts += len(posts)
+        num_of_posts += posts_in_thread
+
+        if posts_in_thread in thread_stats:
+            thread_stats[posts_in_thread] += 1
+        else:
+            thread_stats[posts_in_thread] = 1
 
 # Print dataset statistics.
 print("Threads: %d" % (len(threads)))
 print("Posts: %d" % (num_of_posts))
+print("Questions: %d" % (len(threads)))
+print("Answers: %d" % (num_of_posts - len(threads)))
+print("Thread Count per No. of Posts: %s" % (str(thread_stats)))
 
 # Pickle threads dataset.
 with open("pickles/threads.pkl", "wb") as f:
