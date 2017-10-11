@@ -1,5 +1,6 @@
 import pickle
 import xml.etree.ElementTree as ET
+import matplotlib.pyplot as plt
 
 """
 Useful XML Attributes & Values in Posts.xml (non-exhaustive):
@@ -71,6 +72,15 @@ print("Questions: %d" % (len(threads)))
 print("Answers: %d" % (num_of_posts - len(threads)))
 print("Thread Count per No. of Posts: %s" % (str(thread_stats)))
 
-# Pickle threads dataset.
+# Plot thread_stats.
+plt.figure()
+plt.bar(list(thread_stats.keys()), list(thread_stats.values()))
+plt.xlabel("No. of Posts")
+plt.ylabel("No. of Threads")
+plt.tight_layout()
+plt.savefig("plots/thread_stats.png", dpi=800)
+plt.close("all")
+
+# Pickle data.
 with open("pickles/threads.pkl", "wb") as f:
     pickle.dump(threads, f)
