@@ -6,11 +6,12 @@ import matplotlib.pyplot as plt
 Useful XML Attributes & Values in Posts.xml (non-exhaustive):
 
 1. ID
-2. PostTypeID: '1' (Question), '2' (Answer)
-3. AcceptedAnswerID (if PostTypeID = '1')
-4. ParentID (if PostTypeID = '2')
-5. AnswerCount (nullable)
-6. Tags: '&lt;tag_name&gt;' repeated (nullable)
+2. Body
+3. PostTypeID: '1' (Question), '2' (Answer)
+4. AcceptedAnswerID (if PostTypeID = '1')
+5. ParentID (if PostTypeID = '2')
+6. AnswerCount (nullable)
+7. Tags: '&lt;tag_name&gt;' repeated (nullable)
 
 37,215,530 lines. 37,215,527 post <row>s.
 """
