@@ -9,11 +9,22 @@ Example: python main.py 1
 import sys
 
 if __name__=='__main__':
-    if (sys.argv[1] is not None):
+    if (len(sys.argv) > 1):
         task = sys.argv[1]
     else:
         print (__doc__)
         sys.exit(0)
 
     if task == '1':
-        import dataset_collection.data
+        subtask = 'retrieve_threads'
+        if (len(sys.argv) > 2):
+            subtask = sys.argv[2]
+
+        if (subtask == 'retrieve_threads'):
+            print ('Running Task 1 - Retrieve Threads')
+            from dataset_collection.retrieve_threads import retrieve_threads
+            retrieve_threads()
+        elif (subtask == 'print_thread'):
+            print ('Running Task 1 - Print Thread')
+            from dataset_collection.data import print_thread
+            print_thread()
