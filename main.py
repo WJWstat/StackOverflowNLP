@@ -37,3 +37,7 @@ if __name__ == '__main__':
             print('Running Task 2.1 - Stemming...')
             from data_analysis.stemming import stem_posts
             stem_posts()
+        elif (subtask == 'pos_tagging'):
+            print('Running Task 2.2 - POS Tagging...')
+            from data_analysis.pos_tagging import pos_tag_sentences
+            pos_tag_sentences()
