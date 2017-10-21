@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 
 # 37,215,530 lines. 37,215,527 post <row>s.
 
+
 def retrieve_threads():
     threads_threshold = 500
     tag = "<java>"  # ET parses &lt; and &gt;
@@ -85,5 +86,5 @@ def retrieve_threads():
     with open("pickles/threads.pkl", "wb") as f:
         pickle.dump(threads, f)
 
-if __name__=='__main__':
+if __name__ == '__main__':
     retrieve_threads()
