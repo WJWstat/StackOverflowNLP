@@ -15,10 +15,12 @@ def stem_posts():
 
     for post in posts:
         post = re.sub(r'<code>.*</code>', '', post)  # remove inline code snippets
+
         for paragraph in post.split('\n'):
             paragraph = paragraph.lower()  # lowercase
             paragraph = re.sub(r'[^a-z]', ' ', paragraph)  # replace non-alphabet characters with ' '
             paragraph = paragraph.strip()
+
             for word in paragraph.split(' '):
                 if word in stop_words or word == '':
                     continue
