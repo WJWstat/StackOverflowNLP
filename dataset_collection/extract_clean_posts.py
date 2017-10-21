@@ -3,7 +3,7 @@ import re
 
 
 def extract_clean_posts():
-    with open("pickles/threads.pkl", "rb") as f:
+    with open('pickles/threads.pkl', 'rb') as f:
         threads = pickle.load(f)
 
     # Extract the body of every post.
@@ -11,7 +11,7 @@ def extract_clean_posts():
     for thread_key in list(threads.keys()):
         thread = threads[thread_key]
         for post in thread:
-            posts.append(post["Body"])
+            posts.append(post['Body'])
 
     # Sanitize the content of each post.
     for i in range(len(posts)):
@@ -22,7 +22,7 @@ def extract_clean_posts():
         posts[i] = posts[i].strip()
 
     # Pickle data.
-    with open("pickles/posts.pkl", "wb") as f:
+    with open('pickles/posts.pkl', 'wb') as f:
         pickle.dump(posts, f)
 
 if __name__ == '__main__':
