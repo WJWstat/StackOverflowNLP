@@ -21,10 +21,19 @@ if __name__ == '__main__':
             subtask = sys.argv[2]
 
         if (subtask == 'retrieve_threads'):
-            print('Running Task 1.1 - Retrieve Threads')
+            print('Running Task 1.1 - Retrieve Threads...')
             from dataset_collection.retrieve_threads import retrieve_threads
             retrieve_threads()
         elif (subtask == 'extract_clean_posts'):
-            print('Running Task 1.2 - Extract Clean Posts')
+            print('Running Task 1.2 - Extract Clean Posts...')
             from dataset_collection.extract_clean_posts import extract_clean_posts
             extract_clean_posts()
+    elif task == '2':
+        subtask = 'stemming'
+        if (len(sys.argv) > 2):
+            subtask = sys.argv[2]
+
+        if (subtask == 'stemming'):
+            print('Running Task 2.1 - Stemming...')
+            from data_analysis.stemming import stem_posts
+            stem_posts()
