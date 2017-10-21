@@ -24,3 +24,7 @@ if __name__ == '__main__':
             print('Running Task 1.1 - Retrieve Threads')
             from dataset_collection.retrieve_threads import retrieve_threads
             retrieve_threads()
+        elif (subtask == 'extract_clean_posts'):
+            print('Running Task 1.2 - Extract Clean Posts')
+            from dataset_collection.extract_clean_posts import extract_clean_posts
+            extract_clean_posts()
