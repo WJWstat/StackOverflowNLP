@@ -17,7 +17,7 @@ def extract_clean_posts():
     for i in range(len(posts)):
         posts[i] = re.sub(r'<pre>(.|\n)*</pre>', '', posts[i])  # remove code snippets
         posts[i] = re.sub(r'<(a|/a).*?>', '', posts[i])  # remove links (but not text that is hyperlinked)
-        posts[i] = re.sub(r'<(p|/p|em|/em)>', '', posts[i])  # remove html tags
+        posts[i] = re.sub(r'(?i)<(?!code|/code).*?>', '', posts[i])  # remove html tags except <code></code>
         posts[i] = re.sub(r'\n{3,}', '\n\n', posts[i])
         posts[i] = posts[i].strip()
 
