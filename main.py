@@ -6,6 +6,7 @@ Run this code with an argument 1, 2, 3, 4 or 5 to run the tasks for Assignment 3
 
 Example: python main.py 1
 """
+
 import sys
 
 if __name__ == '__main__':
@@ -41,3 +42,7 @@ if __name__ == '__main__':
             print('Running Task 2.2 - POS Tagging...')
             from data_analysis.pos_tagging import pos_tag_sentences
             pos_tag_sentences()
+        elif (subtask == 'preliminary_tokenization'):
+            print('Running Task 2.3 - Preliminary Tokenization...')
+            from data_analysis.preliminary_tokenizer import tokenize
+            tokenize()
