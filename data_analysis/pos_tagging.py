@@ -25,10 +25,10 @@ def pos_tag_sentences():
         words = nltk.word_tokenize(sentence)
         pos_tags[sentence] = nltk.pos_tag(words)
 
-    # for key in list(pos_tags.keys()):
-    #     print(key)
-    #     print(pos_tags[key])
-    #     print('\n----\n')
+    for key in list(pos_tags.keys()):
+        print(key)
+        print(pos_tags[key])
+        print('\n----\n')
 
     with open('pickles/pos_tags.pkl', 'wb') as f:
         pickle.dump(pos_tags, f)

@@ -1,5 +1,6 @@
 import pickle
 import re
+import html
 
 
 def extract_clean_posts():
@@ -18,8 +19,9 @@ def extract_clean_posts():
         posts[i] = re.sub(r'<pre>(.|\n)*</pre>', '', posts[i])  # remove code snippets
         posts[i] = re.sub(r'<(a|/a).*?>', '', posts[i])  # remove links (but not text that is hyperlinked)
         posts[i] = re.sub(r'(?i)<(?!code|/code).*?>', '', posts[i])  # remove html tags except <code></code>
-        posts[i] = re.sub(r'\n{3,}', '\n\n', posts[i])
-        posts[i] = posts[i].strip()
+        posts[i] = re.sub(r'\n{3,}', '\n\n', posts[i])  # remove multiple (i.e. >= 3) consecutive '\n'
+        posts[i] = posts[i].strip()  # strip any extra whitespace
+        posts[i] = html.unescape(posts[i])  # unescape HTML entities (e.g. &amp;)
 
     # Pickle data.
     with open('pickles/posts.pkl', 'wb') as f:
