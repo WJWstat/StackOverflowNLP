@@ -303,7 +303,7 @@ Inside the object it's always $this->property for me.
 
 ------------------------------------------------------------------------
 
-["If", "I", "wo", "n't", "edit", "the", "property", "I", "'ll", "use", "a", "<code>get_property()</code>", "public", "method", "unless", "it", "'s", "a", "special", "occasion", "such", "as", "a", "MySQLi", "object", "inside", "another", "object", "in", "which", "case", "I", "'ll", "just", "public", "the", "property", "and", "refer", "to", "it", "as", "<code>$obj-&gt;object_property</code>", ".", "Inside", "the", "object", "it", "'s", "always", "$", "this", "-", ">", "property", "for", "me", "."]
+["If", "I", "wo", "n't", "edit", "the", "property", "I", "'ll", "use", "a", "<code>get_property()</code>", "public", "method", "unless", "it", "'s", "a", "special", "occasion", "such", "as", "a", "MySQLi", "object", "inside", "another", "object", "in", "which", "case", "I", "'ll", "just", "public", "the", "property", "and", "refer", "to", "it", "as", "<code>$obj->object_property</code>", ".", "Inside", "the", "object", "it", "'s", "always", "$", "this", "->", "property", "for", "me", "."]
 
 ========================================================================
 
@@ -317,7 +317,7 @@ As an aside, I personally find that using getter/setters makes the code easier t
 
 ------------------------------------------------------------------------
 
-["I", "like", "the", "answer", "by", "cmcculloh", ",", "but", "it", "seems", "like", "the", "most", "correct", "is", "the", "answer", "by", "Greg", "Hurlman", ".", "Use", "getter", "/", "setters", "all", "the", "time", "if", "you", "started", "using", "them", "from", "the", "getgo", "and","/", "or", "are", "used", "to", "working", "with", "them", ".", "As", "an", "aside", ",", "I", "personally", "find", "that", "using", "getter", "/", "setters", "makes", "the", "code", "easier", "to", "read", "and", "to", "debug", "later", "on", "."]
+["I", "like", "the", "answer", "by", "cmcculloh", ",", "but", "it", "seems", "like", "the", "most", "correct", "is", "the", "answer", "by", "Greg", "Hurlman", ".", "Use", "getter", "/", "setters", "all", "the", "time", "if", "you", "started", "using", "them", "from", "the", "getgo", "and", "/", "or", "are", "used", "to", "working", "with", "them", ".", "As", "an", "aside", ",", "I", "personally", "find", "that", "using", "getter", "/", "setters", "makes", "the", "code", "easier", "to", "read", "and", "to", "debug", "later", "on", "."]
 
 ========================================================================
 
@@ -514,7 +514,7 @@ Do you see the difference now?
 
 ------------------------------------------------------------------------
 
-["In", "Java", "there", "are", "two", "basic", "types", "in", "the", "JVM", ".", "1", ")", "Primitive", "types", "and", "2", ")", "Reference", "Types", ".", "int", "is", "a", "primitive", "type", "and", "Integer", "is", "a", "class", "type", "(", "which", "is", "kind", "of", "reference", "type", ")", ".", "Primitive", "values", "do", "not", "share", "state", "with", "other", "primitive", "values", ".", "A", "variable", "whose", "type", "is", "a", "primitive", "type", "always", "holds", "a", "primitive", "value", "of", "that", "type", ".", "Do", "you", "see", "the", "difference", "now", "?" ]
+["In", "Java", "there", "are", "two", "basic", "types", "in", "the", "JVM", ".", "1", ")", "Primitive", "types", "and", "2", ")", "Reference", "Types", ".", "int", "is", "a", "primitive", "type", "and", "Integer", "is", "a", "class", "type", "(", "which", "is", "kind", "of", "reference", "type", ")", ".", "Primitive", "values", "do", "not", "share", "state", "with", "other", "primitive", "values", ".", "A", "variable", "whose", "type", "is", "a", "primitive", "type", "always", "holds", "a", "primitive", "value", "of", "that", "type", ".", "Do", "you", "see", "the", "difference", "now", "?"]
 
 ========================================================================
 
@@ -579,7 +579,7 @@ You can also get the source from a Open Source code coverage tool and learn from
 
 ------------------------------------------------------------------------
 
-["You", "can", "also", "get", "the", "source", "from", "a", "Open", "Source", "code", "coverage", "tool", "and", "learn", "from", "it", "." ]
+["You", "can", "also", "get", "the", "source", "from", "a", "Open", "Source", "code", "coverage", "tool", "and", "learn", "from", "it", "."]
 
 ========================================================================
 
@@ -591,7 +591,7 @@ You might also want to use something like BCEL to analyse which lines of source 
 
 ------------------------------------------------------------------------
 
-["You", "might", "also", "want", "to", "use", "something", "like", "BCEL", "to", "analyse", "which", "lines", "of", "source", "actually", "exist", "in", "the", "byte", "-", "code", ".", "You", "do", "n't", "want", "to", "report", "that", "things", "like", "blank", "lines", "and", "comments", "have", "n't", "been", "covered", "." ]
+["You", "might", "also", "want", "to", "use", "something", "like", "BCEL", "to", "analyse", "which", "lines", "of", "source", "actually", "exist", "in", "the", "byte", "-", "code", ".", "You", "do", "n't", "want", "to", "report", "that", "things", "like", "blank", "lines", "and", "comments", "have", "n't", "been", "covered", "."]
 
 ========================================================================
 
@@ -605,7 +605,7 @@ If not, is there another way to create a custom button in java?
 
 ------------------------------------------------------------------------
 
-["Is", "there", "a", "way", "to", "create", "a", "<code>JButton</code>", "with", "your", "own", "button", "graphic", "and", "not", "just", "with", "an", "image", "inside", "the", "button", "?", "If", "not", ",", "is", "there", "another", "way", "to", "create", "a", "custom", "button", "in", "java", "?" ]
+["Is", "there", "a", "way", "to", "create", "a", "<code>JButton</code>", "with", "your", "own", "button", "graphic", "and", "not", "just", "with", "an", "image", "inside", "the", "button", "?", "If", "not", ",", "is", "there", "another", "way", "to", "create", "a", "custom", "button", "in", "java", "?"]
 
 ========================================================================
 
@@ -617,7 +617,7 @@ I haven't done SWING development since my early CS classes but if it wasn't buil
 
 ------------------------------------------------------------------------
 
-["I", "have", "n't", "done", "SWING", "development", "since", "my", "early", "CS", "classes", "but", "if", "it", "was", "n't", "built", "in", "you", "could", "just", "inherit", "javax", ".", "swing", ".", "AbstractButton", "and", "create", "your", "own", ".", "Should", "be", "pretty", "simple", "to", "wire", "something", "together", "with", "their", "existing", "framework", "." ]
+["I", "have", "n't", "done", "SWING", "development", "since", "my", "early", "CS", "classes", "but", "if", "it", "was", "n't", "built", "in", "you", "could", "just", "inherit", "javax", ".", "swing", ".", "AbstractButton", "and", "create", "your", "own", ".", "Should", "be", "pretty", "simple", "to", "wire", "something", "together", "with", "their", "existing", "framework", "."]
 
 ========================================================================
 
@@ -729,7 +729,7 @@ I am not really familiar with it, but sometimes it's all about knowing the right
 
 ------------------------------------------------------------------------
 
-["The", "META", "-", "INF", ".", "services", "stuff", "is", "known", "by", "its", "class", "name", "in", "the", "API", ":", "ServiceLoader", ".", "A", "Google", "search", "for", "ServiceLoader", "yields", "some", "information", ".", "I", "am", "not", "really", "familiar", "with", "it", ",", "but", "sometimes", "it", "'s", "all", "about", "knowing", "the", "right", "search", "keywords", "." ]
+["The", "META", "-", "INF", ".", "services", "stuff", "is", "known", "by", "its", "class", "name", "in", "the", "API", ":", "ServiceLoader", ".", "A", "Google", "search", "for", "ServiceLoader", "yields", "some", "information", ".", "I", "am", "not", "really", "familiar", "with", "it", ",", "but", "sometimes", "it", "'s", "all", "about", "knowing", "the", "right", "search", "keywords", "."]
 
 ========================================================================
 
@@ -741,7 +741,7 @@ For parsing player commands, I've most often used the split method to split a st
 
 ------------------------------------------------------------------------
 
-["For", "parsing", "player", "commands", ",", "I", "'ve", "most", "often", "used", "the", "split", "method", "to", "split", "a", "string", "by", "delimiters", "and", "then", "to", "then", "just", "figure", "out", "the", "rest", "by", "a", "series", "of", "<code>if</code>", "s", "or", "<code>switch</code>", "es", ".", "What", "are", "some", "different", "ways", "of", "parsing", "strings", "in", "Java", "?" ]
+["For", "parsing", "player", "commands", ",", "I", "'ve", "most", "often", "used", "the", "split", "method", "to", "split", "a", "string", "by", "delimiters", "and", "then", "to", "then", "just", "figure", "out", "the", "rest", "by", "a", "series", "of", "<code>if</code>", "s", "or", "<code>switch</code>", "es", ".", "What", "are", "some", "different", "ways", "of", "parsing", "strings", "in", "Java", "?"]
 
 ========================================================================
 
@@ -771,7 +771,7 @@ Then tokens can be further used for the arguments.  This all assumes no spaces a
 
 ------------------------------------------------------------------------
 
-["A", "simple", "string", "tokenizer", "on", "spaces", "should", "work", ",", "but", "there", "are", "really", "many", "ways", "you", "could", "do", "this", ".", "Here", "is", "an", "example", "using", "a", "tokenizer", ":", "Then", "tokens", "can", "be", "further", "used", "for", "the", "arguments", ".", "This", "all", "assumes", "no", "spaces", "are", "used", "in", "the", "arguments", "...", "so", "you", "might", "want", "to", "roll", "your", "own", "simple", "parsing", "mechanism", "(", "like", "getting", "the", "first", "whitespace", "and", "using", "text", "before", "as", "the", "action", ",", "or", "using", "a", "regular", "expression", "if", "you", "do", "n't", "mind", "the", "speed", "hit", ")", ",", "just", "abstract", "it", "out", "so", "it", "can", "be", "used", "anywhere", "." ]
+["A", "simple", "string", "tokenizer", "on", "spaces", "should", "work", ",", "but", "there", "are", "really", "many", "ways", "you", "could", "do", "this", ".", "Here", "is", "an", "example", "using", "a", "tokenizer", ":", "Then", "tokens", "can", "be", "further", "used", "for", "the", "arguments", ".", "This", "all", "assumes", "no", "spaces", "are", "used", "in", "the", "arguments", "...", "so", "you", "might", "want", "to", "roll", "your", "own", "simple", "parsing", "mechanism", "(", "like", "getting", "the", "first", "whitespace", "and", "using", "text", "before", "as", "the", "action", ",", "or", "using", "a", "regular", "expression", "if", "you", "do", "n't", "mind", "the", "speed", "hit", ")", ",", "just", "abstract", "it", "out", "so", "it", "can", "be", "used", "anywhere", "."]
 
 ========================================================================
 
@@ -789,7 +789,7 @@ Anything which gives a programmer a reason to look at Zork again is good in my b
 
 ------------------------------------------------------------------------
 
-["I", "would", "look", "at", "Java", "migrations", "of", "Zork", ",", "and", "lean", "towards", "a", "simple", "Natural", "Language", "Processor", "(", "driven", "either", "by", "tokenizing", "or", "regex", ")", "such", "as", "the", "following", "(", "from", "this", "link", ")", ":", "...", "Anything", "which", "gives", "a", "programmer", "a", "reason", "to", "look", "at", "Zork", "again", "is", "good", "in", "my", "book", ",", "just", "watch", "out", "for", "Grues", ".", "..." ]
+["I", "would", "look", "at", "Java", "migrations", "of", "Zork", ",", "and", "lean", "towards", "a", "simple", "Natural", "Language", "Processor", "(", "driven", "either", "by", "tokenizing", "or", "regex", ")", "such", "as", "the", "following", "(", "from", "this", "link", ")", ":", "...", "Anything", "which", "gives", "a", "programmer", "a", "reason", "to", "look", "at", "Zork", "again", "is", "good", "in", "my", "book", ",", "just", "watch", "out", "for", "Grues", ".", "..."]
 
 ========================================================================
 
@@ -856,7 +856,7 @@ You'll also want to look at the Pattern class.
 
 ------------------------------------------------------------------------
 
-["Sun", "itself", "recommends", "staying", "away", "from", "StringTokenizer", "and", "using", "the", "String", ".", "spilt", "method", "instead", ".", "You", "'ll", "also", "want", "to", "look", "at", "the", "Pattern", "class", "." ]
+["Sun", "itself", "recommends", "staying", "away", "from", "StringTokenizer", "and", "using", "the", "String", ".", "spilt", "method", "instead", ".", "You", "'ll", "also", "want", "to", "look", "at", "the", "Pattern", "class", "."]
 
 ========================================================================
 
@@ -886,7 +886,7 @@ If this is to parse command lines I would suggest using Commons Cli.
 
 ------------------------------------------------------------------------
 
-["If", "this", "is", "to", "parse", "command", "lines", "I", "would", "suggest", "using", "Commons", "Cli", ".", "The", "Apache", "Commons", "CLI", "library", "provides", "an", "API", "for", "processing", "command", "line", "interfaces", "." ]
+["If", "this", "is", "to", "parse", "command", "lines", "I", "would", "suggest", "using", "Commons", "Cli", ".", "The", "Apache", "Commons", "CLI", "library", "provides", "an", "API", "for", "processing", "command", "line", "interfaces", "."]
 
 ========================================================================
 
@@ -912,7 +912,7 @@ It has a lot of features for interpreting languages, and it's well supported on 
 
 ------------------------------------------------------------------------
 
-["Try", "JavaCC", "a", "parser", "generator", "for", "Java", ".", "It", "has", "a", "lot", "of", "features", "for", "interpreting", "languages", ",", "and", "it", "'s", "well", "supported", "on", "Eclipse", "." ]
+["Try", "JavaCC", "a", "parser", "generator", "for", "Java", ".", "It", "has", "a", "lot", "of", "features", "for", "interpreting", "languages", ",", "and", "it", "'s", "well", "supported", "on", "Eclipse", "."]
 
 ========================================================================
 
@@ -989,7 +989,7 @@ Windows allows you access to the serial port via CreateFile. That gives you a ha
 
 ------------------------------------------------------------------------
 
-["At", "work", "we", "use", "teraterm", "and", "realterm", "for", "checking", "serial", "data", "is", "correctly", "formatted", ".", "Also", "we", "have", "a", "hardware", "splitter", "with", "a", "switch", "so", "we", "can", "monitor", "traffic", "to", "our", "application", "via", "a", "cable", "back", "to", "another", "port", ".", "Windows", "allows", "you", "access", "to", "the", "serial", "port", "via", "CreateFile", ".", "That", "gives", "you", "a", "handle", "and", "from", "there", "you", "can", "configure", "access", "." ]
+["At", "work", "we", "use", "teraterm", "and", "realterm", "for", "checking", "serial", "data", "is", "correctly", "formatted", ".", "Also", "we", "have", "a", "hardware", "splitter", "with", "a", "switch", "so", "we", "can", "monitor", "traffic", "to", "our", "application", "via", "a", "cable", "back", "to", "another", "port", ".", "Windows", "allows", "you", "access", "to", "the", "serial", "port", "via", "CreateFile", ".", "That", "gives", "you", "a", "handle", "and", "from", "there", "you", "can", "configure", "access", "."]
 
 ========================================================================
 
@@ -1001,7 +1001,7 @@ From Java the rxtx (NOT AVAILABLE ANYMORE)library is quite good. It picks up whe
 
 ------------------------------------------------------------------------
 
-["From", "Java", "the", "rxtx", "(", "NOT", "AVAILABLE", "ANYMORE", ")", "library", "is", "quite", "good", ".", "It", "picks", "up", "where", "Sun", "'s", "serial", "IO", "framework", "left", "off", "." ]
+["From", "Java", "the", "rxtx", "(", "NOT", "AVAILABLE", "ANYMORE", ")", "library", "is", "quite", "good", ".", "It", "picks", "up", "where", "Sun", "'s", "serial", "IO", "framework", "left", "off", "."]
 
 ========================================================================
 
@@ -1032,7 +1032,7 @@ My advice: do not use Sun's serial IO framework! It is from 1998 and full of bug
 
 ------------------------------------------------------------------------
 
-["If", "you", "want", "to", "code", "in", "Java", "I", "really", "recommend", "SerialIOs", "SerialPort", ".", "It", "is", "very", "easy", "to", "use", "and", "saves", "you", "days", "of", "work", ".", "I", "'ve", "never", "found", "an", "open", "source", "library", "as", "good", "as", "SerialIO", ",", "REALLY", "!", "My", "advice", ":", "do", "not", "use", "Sun", "'s", "serial", "IO", "framework", "!", "It", "is", "from", "1998", "and", "full", "of", "bugs", ".", "You", "can", "use", "rxtx", "but", "serialio", "is", "better", "!" ]
+["If", "you", "want", "to", "code", "in", "Java", "I", "really", "recommend", "SerialIOs", "SerialPort", ".", "It", "is", "very", "easy", "to", "use", "and", "saves", "you", "days", "of", "work", ".", "I", "'ve", "never", "found", "an", "open", "source", "library", "as", "good", "as", "SerialIO", ",", "REALLY", "!", "My", "advice", ":", "do", "not", "use", "Sun", "'s", "serial", "IO", "framework", "!", "It", "is", "from", "1998", "and", "full", "of", "bugs", ".", "You", "can", "use", "rxtx", "but", "serialio", "is", "better", "!"]
 
 ========================================================================
 
@@ -1044,7 +1044,7 @@ If it needs to be cross platfrom, I would suggest looking at Boost Asio.
 
 ------------------------------------------------------------------------
 
-["If", "it", "needs", "to", "be", "cross", "platfrom", ",", "I", "would", "suggest", "looking", "at", "Boost", "Asio", "." ]
+["If", "it", "needs", "to", "be", "cross", "platfrom", ",", "I", "would", "suggest", "looking", "at", "Boost", "Asio", "."]
 
 ========================================================================
 
@@ -1078,7 +1078,7 @@ I have a simple setter method for a property and <code>null</code> is not approp
 
 ------------------------------------------------------------------------
 
-["I", "have", "a", "simple", "setter", "method", "for", "a", "property", "and", "<code>null</code>", "is", "not", "appropriate", "for", "this", "particular", "property", ".", "I", "have", "always", "been", "torn", "in", "this", "situation", ":", "should", "I", "throw", "an", "<code>IllegalArgumentException</code>", ",", "or", "a", "<code>NullPointerException</code>", "?", "From", "the", "javadocs", ",", "both", "seem", "appropriate", ".", "Is", "there", "some", "kind", "of", "an", "understood", "standard", "?", "Or", "is", "this", "just", "one", "of", "those", "things", "that", "you", "should", "do", "whatever", "you", "prefer", "and", "both", "are", "really", "correct", "?" ]
+["I", "have", "a", "simple", "setter", "method", "for", "a", "property", "and", "<code>null</code>", "is", "not", "appropriate", "for", "this", "particular", "property", ".", "I", "have", "always", "been", "torn", "in", "this", "situation", ":", "should", "I", "throw", "an", "<code>IllegalArgumentException</code>", ",", "or", "a", "<code>NullPointerException</code>", "?", "From", "the", "javadocs", ",", "both", "seem", "appropriate", ".", "Is", "there", "some", "kind", "of", "an", "understood", "standard", "?", "Or", "is", "this", "just", "one", "of", "those", "things", "that", "you", "should", "do", "whatever", "you", "prefer", "and", "both", "are", "really", "correct", "?"]
 
 ========================================================================
 
@@ -1090,7 +1090,7 @@ It seems like an <code>IllegalArgumentException</code> is called for if you don'
 
 ------------------------------------------------------------------------
 
-["It", "seems", "like", "an", "<code>IllegalArgumentException</code>", "is", "called", "for", "if", "you", "do", "n't", "want", "<code>null</code>", "to", "be", "an", "allowed", "value", ",", "and", "the", "<code>NullPointerException</code>", "would", "be", "thrown", "if", "you", "were", "trying", "to", "use", "a", "variable", "that", "turns", "out", "to", "be", "<code>null</code>", "." ]
+["It", "seems", "like", "an", "<code>IllegalArgumentException</code>", "is", "called", "for", "if", "you", "do", "n't", "want", "<code>null</code>", "to", "be", "an", "allowed", "value", ",", "and", "the", "<code>NullPointerException</code>", "would", "be", "thrown", "if", "you", "were", "trying", "to", "use", "a", "variable", "that", "turns", "out", "to", "be", "<code>null</code>", "."]
 
 ========================================================================
 
@@ -1104,7 +1104,7 @@ So, if you're using it and it's <code>null</code>, <code>NullPointer</code>. If 
 
 ------------------------------------------------------------------------
 
-["If", "it", "'s", "a", "<code>setter</code>", "method", "and", "<code>null</code>", "is", "being", "passed", "to", "it", ",", "I", "think", "it", "would", "make", "more", "sense", "to", "throw", "an", "<code>IllegalArgumentException</code>", ".", "A", "<code>NullPointerException</code>", "seems", "to", "make", "more", "sense", "in", "the", "case", "where", "you", "'re", "attempting", "to", "actually", "use", "the", "<code>null</code>", ".", "So", ",", "if", "you", "'re", "using", "it", "and", "it", "'s", "<code>null</code>", ",", "<code>NullPointer</code>", ".", "If", "it", "'s", "being", "passed", "in", "and", "it", "'s", "<code>null</code>", ",", "<code>IllegalArgument</code>", "." ]
+["If", "it", "'s", "a", "<code>setter</code>", "method", "and", "<code>null</code>", "is", "being", "passed", "to", "it", ",", "I", "think", "it", "would", "make", "more", "sense", "to", "throw", "an", "<code>IllegalArgumentException</code>", ".", "A", "<code>NullPointerException</code>", "seems", "to", "make", "more", "sense", "in", "the", "case", "where", "you", "'re", "attempting", "to", "actually", "use", "the", "<code>null</code>", ".", "So", ",", "if", "you", "'re", "using", "it", "and", "it", "'s", "<code>null</code>", ",", "<code>NullPointer</code>", ".", "If", "it", "'s", "being", "passed", "in", "and", "it", "'s", "<code>null</code>", ",", "<code>IllegalArgument</code>", "."]
 
 ========================================================================
 
@@ -1139,7 +1139,7 @@ If you choose to throw a NPE and you are using the argument in your method, it m
 
 ------------------------------------------------------------------------
 
-["If", "you", "choose", "to", "throw", "a", "NPE", "and", "you", "are", "using", "the", "argument", "in", "your", "method", ",", "it", "might", "be", "redundant", "and", "expensive", "to", "explicitly", "check", "for", "a", "null", ".", "I", "think", "the", "VM", "already", "does", "that", "for", "you", "." ]
+["If", "you", "choose", "to", "throw", "a", "NPE", "and", "you", "are", "using", "the", "argument", "in", "your", "method", ",", "it", "might", "be", "redundant", "and", "expensive", "to", "explicitly", "check", "for", "a", "null", ".", "I", "think", "the", "VM", "already", "does", "that", "for", "you", "."]
 
 ========================================================================
 
@@ -1238,7 +1238,7 @@ In general, a developer should never throw a NullPointerException. This exceptio
 
 ------------------------------------------------------------------------
 
-["In", "general", ",", "a", "developer", "should", "never", "throw", "a", "NullPointerException", ".", "This", "exception", "is", "thrown", "by", "the", "runtime", "when", "code", "attempts", "to", "dereference", "a", "variable", "who", "'s", "value", "is", "null", ".", "Therefore", ",", "if", "your", "method", "wants", "to", "explicitly", "disallow", "null", ",", "as", "opposed", "to", "just", "happening", "to", "have", "a", "null", "value", "raise", "a", "NullPointerException", ",", "you", "should", "throw", "an", "IllegalArgumentException", "." ]
+["In", "general", ",", "a", "developer", "should", "never", "throw", "a", "NullPointerException", ".", "This", "exception", "is", "thrown", "by", "the", "runtime", "when", "code", "attempts", "to", "dereference", "a", "variable", "who", "'s", "value", "is", "null", ".", "Therefore", ",", "if", "your", "method", "wants", "to", "explicitly", "disallow", "null", ",", "as", "opposed", "to", "just", "happening", "to", "have", "a", "null", "value", "raise", "a", "NullPointerException", ",", "you", "should", "throw", "an", "IllegalArgumentException", "."]
 
 ========================================================================
 
@@ -1272,7 +1272,7 @@ You should throw an IllegalArgumentException, as it will make it obvious to the 
 
 ------------------------------------------------------------------------
 
-["You", "should", "throw", "an", "IllegalArgumentException", ",", "as", "it", "will", "make", "it", "obvious", "to", "the", "programmer", "that", "he", "has", "done", "something", "invalid", ".", "Developers", "are", "so", "used", "to", "seeing", "NPE", "thrown", "by", "the", "VM", ",", "that", "any", "programmer", "would", "not", "immediately", "realize", "his", "error", ",", "and", "would", "start", "looking", "around", "randomly", ",", "or", "worse", ",", "blame", "your", "code", "for", "being", "'buggy'", "." ]
+["You", "should", "throw", "an", "IllegalArgumentException", ",", "as", "it", "will", "make", "it", "obvious", "to", "the", "programmer", "that", "he", "has", "done", "something", "invalid", ".", "Developers", "are", "so", "used", "to", "seeing", "NPE", "thrown", "by", "the", "VM", ",", "that", "any", "programmer", "would", "not", "immediately", "realize", "his", "error", ",", "and", "would", "start", "looking", "around", "randomly", ",", "or", "worse", ",", "blame", "your", "code", "for", "being", "'buggy'", "."]
 
 ========================================================================
 
@@ -1321,7 +1321,7 @@ Checkstyle is another one I've used at a previous company... it's mainly for sty
 
 ------------------------------------------------------------------------
 
-["Checkstyle", "is", "another", "one", "I", "'ve", "used", "at", "a", "previous", "company", "...", "it", "'s", "mainly", "for", "style", "checking", ",", "but", "it", "can", "do", "some", "static", "analysis", "too", ".", "Also", ",", "Clover", "for", "code", "coverage", ",", "though", "be", "aware", "it", "is", "not", "a", "free", "tool", "." ]
+["Checkstyle", "is", "another", "one", "I", "'ve", "used", "at", "a", "previous", "company", "...", "it", "'s", "mainly", "for", "style", "checking", ",", "but", "it", "can", "do", "some", "static", "analysis", "too", ".", "Also", ",", "Clover", "for", "code", "coverage", ",", "though", "be", "aware", "it", "is", "not", "a", "free", "tool", "."]
 
 ========================================================================
 
@@ -1335,7 +1335,7 @@ I think it's important to have some kind of static analysis, supporting your dev
 
 ------------------------------------------------------------------------
 
-["We", "are", "using", "FindBugs", "and", "Checkstyle", "as", "well", "as", "Clover", "for", "Code", "Coverage", ".", "I", "think", "it", "'s", "important", "to", "have", "some", "kind", "of", "static", "analysis", ",", "supporting", "your", "development", ".", "Unfortunately", "it", "'s", "still", "not", "widely", "spread", "that", "these", "tools", "are", "important", "." ]
+["We", "are", "using", "FindBugs", "and", "Checkstyle", "as", "well", "as", "Clover", "for", "Code", "Coverage", ".", "I", "think", "it", "'s", "important", "to", "have", "some", "kind", "of", "static", "analysis", ",", "supporting", "your", "development", ".", "Unfortunately", "it", "'s", "still", "not", "widely", "spread", "that", "these", "tools", "are", "important", "."]
 
 ========================================================================
 
@@ -1514,7 +1514,7 @@ It saves an allocation or two and is more readable.
 
 ------------------------------------------------------------------------
 
-["Ditto", "on", "what", "Justin", "said", ",", "but", "you", "should", "do", "this", "instead", ":", "It", "saves", "an", "allocation", "or", "two", "and", "is", "more", "readable", "." ]
+["Ditto", "on", "what", "Justin", "said", ",", "but", "you", "should", "do", "this", "instead", ":", "It", "saves", "an", "allocation", "or", "two", "and", "is", "more", "readable", "."]
 
 ========================================================================
 
@@ -1576,7 +1576,7 @@ I have tried loading libA before libB, but that still does not work. Seems the O
 
 ------------------------------------------------------------------------
 
-["Example", ":", "I", "have", "two", "shared", "objects", "(", "same", "should", "apply", "to", ".", "dlls", ")", ".", "The", "first", "shared", "object", "is", "from", "a", "third", "-", "party", "library", ",", "we", "'ll", "call", "it", "libA", ".", "so", ".", "I", "have", "wrapped", "some", "of", "this", "with", "JNI", "and", "created", "my", "own", "library", ",", "libB", ".", "so", ".", "Now", "libB", "depends", "on", "libA", ".", "When", "webstarting", ",", "both", "libraries", "are", "places", "in", "some", "webstart", "working", "area", ".", "My", "java", "code", "attempts", "to", "load", "libB", ".", "At", "this", "point", "the", "system", "loader", "will", "attempt", "to", "load", "libA", "which", "is", "not", "in", "the", "system", "library", "path", "(", "java", ".", "library", ".", "path", "wo", "n't", "help", "this", ")", ".", "The", "end", "result", "is", "that", "libB", "has", "an", "unsatisfied", "link", "and", "cannot", "be", "used", ".", "I", "have", "tried", "loading", "libA", "before", "libB", ",", "but", "that", "still", "does", "not", "work", ".", "Seems", "the", "OS", "wants", "to", "do", "that", "loading", "for", "me", ".", "Is", "there", "any", "way", "I", "can", "make", "this", "work", "other", "than", "statically", "compiling", "?" ]
+["Example", ":", "I", "have", "two", "shared", "objects", "(", "same", "should", "apply", "to", ".", "dlls", ")", ".", "The", "first", "shared", "object", "is", "from", "a", "third", "-", "party", "library", ",", "we", "'ll", "call", "it", "libA", ".", "so", ".", "I", "have", "wrapped", "some", "of", "this", "with", "JNI", "and", "created", "my", "own", "library", ",", "libB", ".", "so", ".", "Now", "libB", "depends", "on", "libA", ".", "When", "webstarting", ",", "both", "libraries", "are", "places", "in", "some", "webstart", "working", "area", ".", "My", "java", "code", "attempts", "to", "load", "libB", ".", "At", "this", "point", "the", "system", "loader", "will", "attempt", "to", "load", "libA", "which", "is", "not", "in", "the", "system", "library", "path", "(", "java", ".", "library", ".", "path", "wo", "n't", "help", "this", ")", ".", "The", "end", "result", "is", "that", "libB", "has", "an", "unsatisfied", "link", "and", "cannot", "be", "used", ".", "I", "have", "tried", "loading", "libA", "before", "libB", ",", "but", "that", "still", "does", "not", "work", ".", "Seems", "the", "OS", "wants", "to", "do", "that", "loading", "for", "me", ".", "Is", "there", "any", "way", "I", "can", "make", "this", "work", "other", "than", "statically", "compiling", "?"]
 
 ========================================================================
 
