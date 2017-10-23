@@ -10,5 +10,6 @@ Token Definition:
     - URLs ('java.net', 'http://asm.objectweb.org/', etc.)
     - Package Names ('com.foo.bar.class', etc.)
 - A code block is a single separate token (from '<code>' to '</code>')
+- A numerical value is a separate token
 - Clitics are separate tokens from the adjoining word
-- An English word (with no punctuation / space in between) is a separate token
+- An English word (defined by a chain of strictly alphabetical characters) is a separate token
