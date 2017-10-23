@@ -9,6 +9,7 @@ Token Definition:
     - Decimal Numbers
     - URLs ('java.net', 'http://asm.objectweb.org/', etc.)
     - Package Names ('com.foo.bar.class', etc.)
+    - File Paths ('com/foo/Bar.java', etc.)
 - A code block is a single separate token (from '<code>' to '</code>')
 - A numerical value is a separate token
 - Clitics are separate tokens from the adjoining word
