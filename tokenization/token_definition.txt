@@ -1,7 +1,10 @@
 Token Definition:
 
-- Each punctuation mark is a separate token (some exceptions: '...', '->', clitics, text emojis, 'e.g.', 'C#', 'C++')
-- A URL is a single separate token
+- Each punctuation mark is a separate token (some exceptions: '...', '->', clitics, text emojis, 'e.g.', 'i.e.', 'C#', 'C++', '.NET', '1.x', '2.x', decimal numbers, URLs, package names)
+- Each text emoji is a token.
+- Each programming language is a separate token. 
+- A URL is a single separate token (Both partial and complete URLs are considered such as 'java.net' or 'http://asm.objectweb.org/')
+- Java package names are considered as one token (For example, 'com.foo.Bar.class' is considered as 1 token)
 - A code block is a single separate token (from '<code>' to '</code>')
 - Clitics are a separate token from the word
 - A word (with no punctuation / space in between) is a separate token
