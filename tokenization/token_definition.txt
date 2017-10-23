@@ -1,0 +1,7 @@
+Token Definition:
+
+- Each punctuation mark is a separate token (some exceptions: '...', '->', clitics, text emojis, 'e.g.', 'C#', 'C++')
+- A URL is a single separate token
+- A code block is a single separate token (from '<code>' to '</code>')
+- Clitics are a separate token from the word
+- A word (with no punctuation / space in between) is a separate token
