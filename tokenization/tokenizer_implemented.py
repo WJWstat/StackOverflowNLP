@@ -9,13 +9,41 @@ with open('tokenization/text_emoticons.txt', 'r') as file:
     emoticons = file.readlines()
 emoticons = [emoticon.strip().lower() for emoticon in emoticons]
 
+def handle_clitics(tokens):
+    idx = -1
+    tokens = [tokens]
+    for token in list(tokens):
+        idx += 1
+        if token[-1].lower() == 's' and token[-2] in ["'"]:
+            tokens.insert(idx, token[:-2])
+            idx += 1
+            tokens[idx] = token[-2:]
+        elif token[-2].lower() == 's' and token[-1] in ["'"]:
+            tokens.insert(idx, token[:-1])
+            idx += 1
+            tokens[idx] = token[-1:]
+        else:
+            length = len(token)
+            if length > 1:
+                for pos in range(length - 1, -1, -1):
+                    if token[pos] in ["'"]:
+                        if 2 < length and pos + 2 == length and token[-1] == 't' and token[pos - 1] == 'n':
+                            pos -= 1
+                        tokens.insert(idx, token[:pos])
+                        idx += 1
+                        tokens[idx] = token[pos:]
+    return tokens
+
+
+
+
 def tokenize():
     with open('pickles/posts.pkl', 'rb') as f:
         posts = pickle.load(f)
 
     f = open('tokenization/tokenized_data.txt', 'w+')
         
-    posts = posts[:400]
+    posts = posts[:100]
     post_no = 1
     for post in posts:
         f.write('POST {}\n\n'.format(post_no))
@@ -64,17 +92,34 @@ def non_alphanum_tokenizer(sentence):
 def package_tokenizer(sentence):
     return [token for token in package_tokenizer.split(sentence) if token]
 
-@_matches(r'([(){}\[\]])')
+@_matches(r'([(){}\[\],])')
 def bracket_tokenizer(sentence):
     return [token for token in bracket_tokenizer.split(sentence) if token]
+
+@_matches(r'((.*)?(\/[^/\n ]*)+\/?\n?)')
+def filepath_tokenizer(sentence):
+    return [token for token in filepath_tokenizer.split(sentence) if token]
+
+@_matches(r'(([+|-]?\d+)?\.\d+)')
+def decimal_tokenizer(sentence):
+    return [token for token in decimal_tokenizer.split(sentence) if token]
+
+@_matches(r'(\S+\'\S+)')
+def constraction_tokenizer(sentence):
+    return [token for token in constraction_tokenizer.split(sentence) if token]
 
 def SimpleTokenizer(text):
     for token in code_tokenizer(text):
         if not code_tokenizer.match(token):
             for new_token in space_tokenizer(token):
-                if new_token.lower() not in emoticons and new_token.lower() not in langs:
+                if new_token.lower() not in emoticons:
                     for sub_token in bracket_tokenizer(new_token):
-                        if url_tokenizer.match(sub_token) is None and package_tokenizer.match(sub_token) is None:
+                        if constraction_tokenizer.match(sub_token) is not None:
+                            token_list =handle_clitics(sub_token)
+                            for item in token_list:
+                                yield item
+                        elif sub_token.lower() not in langs and decimal_tokenizer.match(sub_token) is None and url_tokenizer.match(sub_token) is None and package_tokenizer.match(sub_token) is None and filepath_tokenizer.match(sub_token) is None:
+                            print("entered")
                             for sub_sub_token in non_alphanum_tokenizer(sub_token):
                                 yield sub_sub_token
                         else:
