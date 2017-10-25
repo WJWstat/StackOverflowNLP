@@ -42,8 +42,7 @@ def tokenize():
         posts = pickle.load(f)
 
     f = open('tokenization/tokenized_data.txt', 'w+')
-        
-    posts = posts[:100]
+
     post_no = 1
     for post in posts:
         f.write('POST {}\n\n'.format(post_no))
