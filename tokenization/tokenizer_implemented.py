@@ -108,22 +108,43 @@ def decimal_tokenizer(sentence):
 def constraction_tokenizer(sentence):
     return [token for token in constraction_tokenizer.split(sentence) if token]
 
+@_matches(r'([a-zA-z]\.([a-zA-z]\.)+)')
+def abbreviation_tokenizer(sentence):
+    return [token for token in abbreviation_tokenizer.split(sentence) if token]
+
+@_matches(r'(\.\.\.)|(->)')
+def extra_tokenizer(sentence):
+    return [token for token in extra_tokenizer.split(sentence) if token]
+
+@_matches(r'(^\w+\/\w+$)')
+def eitheror_tokenizer(sentence):
+    return [token for token in eitheror_tokenizer.split(sentence) if token]
+
+
+
 def SimpleTokenizer(text):
     for token in code_tokenizer(text):
         if not code_tokenizer.match(token):
             for new_token in space_tokenizer(token):
                 if new_token.lower() not in emoticons:
-                    for sub_token in bracket_tokenizer(new_token):
-                        if constraction_tokenizer.match(sub_token) is not None:
-                            token_list =handle_clitics(sub_token)
-                            for item in token_list:
-                                yield item
-                        elif sub_token.lower() not in langs and decimal_tokenizer.match(sub_token) is None and url_tokenizer.match(sub_token) is None and package_tokenizer.match(sub_token) is None and filepath_tokenizer.match(sub_token) is None:
-                            print("entered")
-                            for sub_sub_token in non_alphanum_tokenizer(sub_token):
-                                yield sub_sub_token
-                        else:
-                            yield sub_token 
+                    for next_token in extra_tokenizer(new_token):
+                        for nexter_token in extra_tokenizer(next_token): 
+                            for sub_token in bracket_tokenizer(nexter_token):
+                                if constraction_tokenizer.match(sub_token) is not None:
+                                    token_list =handle_clitics(sub_token)
+                                    for item in token_list:
+                                        yield item
+                                elif sub_token.lower() not in langs and extra_tokenizer.match(sub_token) is None and abbreviation_tokenizer.match(sub_token) is None and  decimal_tokenizer.match(sub_token) is None and url_tokenizer.match(sub_token) is None and package_tokenizer.match(sub_token) is None and filepath_tokenizer.match(sub_token) is None:
+                                    for sub_sub_token in non_alphanum_tokenizer(sub_token):
+                                        yield sub_sub_token
+                                else:
+                                    if eitheror_tokenizer.match(sub_token):
+                                        arr = sub_token.split('/')
+                                        yield arr[0]
+                                        yield '/'
+                                        yield arr[1]
+                                    else:
+                                        yield sub_token 
                 else:
                     yield new_token
         else:
