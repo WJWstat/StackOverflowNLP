@@ -2,3 +2,5 @@ ENV/
 data/
 __pycache__/
 *.pyc
+.DS_STORE
+.idea/
