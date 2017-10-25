@@ -4,13 +4,18 @@ import pickle
 with open('tokenization/programming_languages.txt', 'r') as file:
     langs = file.readlines()
 langs = [lang.strip().lower() for lang in langs]
-xdef tokenize():
+
+with open('tokenization/text_emoticons.txt', 'r') as file:
+    emoticons = file.readlines()
+emoticons = [emoticon.strip().lower() for emoticon in emoticons]
+
+def tokenize():
     with open('pickles/posts.pkl', 'rb') as f:
         posts = pickle.load(f)
 
     f = open('tokenization/tokenized_data.txt', 'w+')
         
-    posts = posts[:100]
+    posts = posts[:400]
     post_no = 1
     for post in posts:
         f.write('POST {}\n\n'.format(post_no))
@@ -55,15 +60,27 @@ def url_tokenizer(sentence):
 def non_alphanum_tokenizer(sentence):
     return [token for token in non_alphanum_tokenizer.split(sentence) if token]
 
+@_matches(r'([a-z][a-z0-9_]*(\.[a-z0-9_]+)+[0-9a-z_])')
+def package_tokenizer(sentence):
+    return [token for token in package_tokenizer.split(sentence) if token]
+
+@_matches(r'([(){}\[\]])')
+def bracket_tokenizer(sentence):
+    return [token for token in bracket_tokenizer.split(sentence) if token]
+
 def SimpleTokenizer(text):
     for token in code_tokenizer(text):
         if not code_tokenizer.match(token):
-            for sub_token in space_tokenizer(token):
-                if sub_token.lower() not in langs and url_tokenizer.match(sub_token) is None:
-                    for sub_sub_token in non_alphanum_tokenizer(sub_token):
-                        yield sub_sub_token
+            for new_token in space_tokenizer(token):
+                if new_token.lower() not in emoticons and new_token.lower() not in langs:
+                    for sub_token in bracket_tokenizer(new_token):
+                        if url_tokenizer.match(sub_token) is None and package_tokenizer.match(sub_token) is None:
+                            for sub_sub_token in non_alphanum_tokenizer(sub_token):
+                                yield sub_sub_token
+                        else:
+                            yield sub_token 
                 else:
-                    yield sub_token 
+                    yield new_token
         else:
             yield token
     yield None  # None to signal sentence terminals
