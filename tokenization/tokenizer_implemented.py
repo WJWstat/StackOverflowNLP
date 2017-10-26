@@ -2,12 +2,11 @@ import re
 import pickle
 
 with open('tokenization/programming_languages.txt', 'r') as file:
-    langs = file.readlines()
-langs = [lang.strip().lower() for lang in langs]
+    langs = file.read().splitlines()
 
 with open('tokenization/text_emoticons.txt', 'r') as file:
-    emoticons = file.readlines()
-emoticons = [emoticon.strip().lower() for emoticon in emoticons]
+    emoticons = file.read().splitlines()
+
 
 def handle_clitics(tokens):
     idx = -1
@@ -50,7 +49,7 @@ def tokenize():
         f.write('{}\n\n'.format('-' * 72))
 
         tokens = []
-        for token in SimpleTokenizer(post):
+        for token in Tokenizer(post):
             if token:
                 tokens.append(token)
 
@@ -121,7 +120,7 @@ def eitheror_tokenizer(sentence):
 
 
 
-def SimpleTokenizer(text):
+def Tokenizer(text):
     for token in code_tokenizer(text):
         if not code_tokenizer.match(token):
             for new_token in space_tokenizer(token):
