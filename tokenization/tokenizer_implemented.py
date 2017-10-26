@@ -189,6 +189,7 @@ def tokenize():
 
     f = open('tokenization/tokenized_data.txt', 'w+')
     # posts = posts[:100]
+    complete_token_list = []
     post_no = 1
     for post in posts:
         f.write('POST {}\n\n'.format(post_no))
@@ -202,9 +203,12 @@ def tokenize():
 
         f.write('[{}]\n\n'.format(', '.join(('"' + token + '"' for token in tokens))))
         f.write('{}\n\n\n\n'.format('=' * 72))
-
+        complete_token_list.extend(tokens)
         post_no += 1
-
+    
+    # Pickle data.
+    with open('pickles/tokens.pkl', 'wb') as f:
+        pickle.dump(complete_token_list, f)
 
 def main():
     tokenize()
