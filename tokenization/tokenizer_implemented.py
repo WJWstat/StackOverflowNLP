@@ -3,12 +3,10 @@ import pickle
 
 
 with open('tokenization/programming_languages.txt', 'r') as file:
-    langs = file.readlines()
-langs = [lang.strip().lower() for lang in langs]
+    langs = file.read().split()
 
 with open('tokenization/text_emoticons.txt', 'r') as file:
-    emoticons = file.readlines()
-emoticons = [emoticon.strip().lower() for emoticon in emoticons]
+    emoticons = file.read().split()
 
 
 def _matches(regex):
@@ -105,36 +103,31 @@ def mark_tokens(tokens, filter):
     return ["__FT__" + token if filter(token) and "__FT__" not in token else token for token in tokens]
 
 
-def handle_clitics(tokens):
-    idx = -1
-    tokens = [tokens]
-    for token in list(tokens):
-        idx += 1
-        if token[-1].lower() == 's' and token[-2] in ["'"]:
-            tokens.insert(idx, token[:-2])
-            idx += 1
-            tokens[idx] = token[-2:]
-        elif token[-2].lower() == 's' and token[-1] in ["'"]:
-            tokens.insert(idx, token[:-1])
-            idx += 1
-            tokens[idx] = token[-1:]
-        else:
-            length = len(token)
-            if length > 1:
-                for pos in range(length - 1, -1, -1):
-                    if token[pos] in ["'"]:
-                        if 2 < length and pos + 2 == length and token[-1] == 't' and token[pos - 1] == 'n':
-                            pos -= 1
-                        tokens.insert(idx, token[:pos])
-                        idx += 1
-                        tokens[idx] = token[pos:]
+def handle_clitics(token):
+    tokens = []
+    if token[-1].lower() == 's' and token[-2] in ["'"]:
+        tokens.append(token[:-2])
+        tokens.append(token[-2:])
+    else:
+        idx=0
+        sub_tokens = [token]
+        length = len(token)
+        if length > 1:
+            for pos in range(length - 1, 0, -1):
+                if token[pos] in ["'"]:
+                    if 2 < length and pos + 2 == length and token[-1] == 't' and token[pos - 1] == 'n':
+                        pos -= 1
+                    sub_tokens.insert(idx, token[:pos])
+                    idx += 1
+                    sub_tokens[idx] = token[pos:]
+        tokens.extend(sub_tokens)
     return tokens
 
 
 def simple_tokenizer(text):
-    
+
     code_tokenized = code_tokenizer(text)
-    
+
     space_tokenized = []
     for token in code_tokenized:
         if not code_tokenizer.match(token):
@@ -142,50 +135,50 @@ def simple_tokenizer(text):
             space_tokenized.extend(space_tokenized_token)
         else:
             space_tokenized.append(token)
-    
+
     emoticon_and_lang_marked_tokens = mark_tokens(space_tokenized, lambda token : token.lower() in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
-    
+
     new_extra_tokenized = []
     for token in emoticon_and_lang_marked_tokens:
         new_extra_tokenized.extend(new_extra_tokenizer(token))
-    
+
     emoticon_and_lang_marked_tokens = mark_tokens(new_extra_tokenized, lambda token : token.lower() in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
-    
+
     constraction_tokenized = []
     for token in emoticon_and_lang_marked_tokens:
         if constraction_tokenizer.match(token) is not None:
             constraction_tokenized.extend(["__FT__" + sub_token for sub_token in handle_clitics(token)])
         else:
             constraction_tokenized.append(token)
-    
+
     def to_be_filtered(sub_token):
         checklist = [
-            new_extra_tokenizer.match(sub_token) is None, 
-            abbreviation_tokenizer.match(sub_token) is None, 
+            new_extra_tokenizer.match(sub_token) is None,
+            abbreviation_tokenizer.match(sub_token) is None,
             decimal_tokenizer.match(sub_token) is None,
             url_tokenizer.match(sub_token) is None,
             package_tokenizer.match(sub_token) is None,
             filepath_tokenizer.match(sub_token) is None
         ]
         return False in checklist
-    
+
     filter_marked_tokens = mark_tokens(constraction_tokenized, to_be_filtered)
-    
+
     non_alphanum_tokenized = []
     for token in filter_marked_tokens:
         non_alphanum_tokenized.extend(non_alphanum_tokenizer(token))
-    
+
     eitheror_tokenized = []
     for token in non_alphanum_tokenized:
         if eitheror_tokenizer.match(token) is not None:
             eitheror_tokenized.extend([token.split('/')[0], '/', token.split('/')[1]])
         else:
             eitheror_tokenized.append(token)
-    
+
     clean_tokens = []
     for token in eitheror_tokenized:
         clean_tokens.append(token.replace("__FT__", ""))
-    
+
     for token in clean_tokens:
         yield token
 
@@ -195,7 +188,7 @@ def tokenize():
         posts = pickle.load(f)
 
     f = open('tokenization/tokenized_data.txt', 'w+')
-    #posts = posts[:100]
+    # posts = posts[:100]
     post_no = 1
     for post in posts:
         f.write('POST {}\n\n'.format(post_no))
