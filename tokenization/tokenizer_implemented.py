@@ -1,11 +1,108 @@
 import re
 import pickle
 
+
 with open('tokenization/programming_languages.txt', 'r') as file:
-    langs = file.read().splitlines()
+    langs = file.readlines()
+langs = [lang.strip().lower() for lang in langs]
 
 with open('tokenization/text_emoticons.txt', 'r') as file:
-    emoticons = file.read().splitlines()
+    emoticons = file.readlines()
+emoticons = [emoticon.strip().lower() for emoticon in emoticons]
+
+
+def _matches(regex):
+    """Regular expression compiling function decorator."""
+    def match_decorator(fn):
+        automaton = re.compile(regex, 32)
+        fn.split = automaton.split
+        fn.match = automaton.match
+        fn.search = automaton.search
+        return fn
+
+    return match_decorator
+
+
+@_matches(r'\s+')
+def space_tokenizer(sentence):
+    if not re.match(r'.*(__FT__).*', sentence):
+        return [token for token in space_tokenizer.split(sentence) if token]
+    else:
+        return [sentence]
+
+@_matches(r'(<code>.*?<\/code>)')
+def code_tokenizer(sentence):
+    if not re.match(r'.*(__FT__).*', sentence):
+        return [token for token in code_tokenizer.split(sentence) if token]
+    else:
+        return [sentence]
+
+@_matches(r'(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})')
+def url_tokenizer(sentence):
+    if not re.match(r'.*(__FT__).*', sentence):
+        return [token for token in url_tokenizer.split(sentence) if token]
+    else:
+        return [sentence]
+
+@_matches(r'(\W)')
+def non_alphanum_tokenizer(sentence):
+    if not re.match(r'.*(__FT__).*', sentence):
+        return [token for token in non_alphanum_tokenizer.split(sentence) if token]
+    else:
+        return [sentence]
+
+@_matches(r'([a-z][a-z0-9_]*(\.[a-z0-9_]+)+[0-9a-z_])')
+def package_tokenizer(sentence):
+    if not re.match(r'.*(__FT__).*', sentence):
+        return [token for token in package_tokenizer.split(sentence) if token]
+    else:
+        return [sentence]
+
+@_matches(r'((.*)?(\/[^/\n ]*)+\/?\n?)')
+def filepath_tokenizer(sentence):
+    if not re.match(r'.*(__FT__).*', sentence):
+        return [token for token in filepath_tokenizer.split(sentence) if token]
+    else:
+        return [sentence]
+
+@_matches(r'(([+|-]?\d+)?\.\d+)')
+def decimal_tokenizer(sentence):
+    if not re.match(r'.*(__FT__).*', sentence):
+        return [token for token in decimal_tokenizer.split(sentence) if token]
+    else:
+        return [sentence]
+
+@_matches(r'(\S+\'\S+)')
+def constraction_tokenizer(sentence):
+    if not re.match(r'.*(__FT__).*', sentence):
+        return [token for token in constraction_tokenizer.split(sentence) if token]
+    else:
+        return [sentence]
+
+@_matches(r'([a-zA-z]\.([a-zA-z]\.)+)')
+def abbreviation_tokenizer(sentence):
+    if not re.match(r'.*(__FT__).*', sentence):
+        return [token for token in abbreviation_tokenizer.split(sentence) if token]
+    else:
+        return [sentence]
+
+@_matches(r'(\.\.\.|->|[(){}\[\],])')
+def new_extra_tokenizer(sentence):
+    if not re.match(r'.*(__FT__).*', sentence):
+        return [token for token in new_extra_tokenizer.split(sentence) if token]
+    else:
+        return [sentence]
+
+@_matches(r'(^\w+[\/]\w+$)')
+def eitheror_tokenizer(sentence):
+    if not re.match(r'.*(__FT__).*', sentence):
+        return [token for token in eitheror_tokenizer.split(sentence) if token]
+    else:
+        return [sentence]
+
+
+def mark_tokens(tokens, filter):
+    return ["__FT__" + token if filter(token) and "__FT__" not in token else token for token in tokens]
 
 
 def handle_clitics(tokens):
@@ -34,6 +131,63 @@ def handle_clitics(tokens):
     return tokens
 
 
+def simple_tokenizer(text):
+    
+    code_tokenized = code_tokenizer(text)
+    
+    space_tokenized = []
+    for token in code_tokenized:
+        if not code_tokenizer.match(token):
+            space_tokenized_token = space_tokenizer(token)
+            space_tokenized.extend(space_tokenized_token)
+        else:
+            space_tokenized.append(token)
+    
+    emoticon_and_lang_marked_tokens = mark_tokens(space_tokenized, lambda token : token.lower() in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
+    
+    new_extra_tokenized = []
+    for token in emoticon_and_lang_marked_tokens:
+        new_extra_tokenized.extend(new_extra_tokenizer(token))
+    
+    emoticon_and_lang_marked_tokens = mark_tokens(new_extra_tokenized, lambda token : token.lower() in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
+    
+    constraction_tokenized = []
+    for token in emoticon_and_lang_marked_tokens:
+        if constraction_tokenizer.match(token) is not None:
+            constraction_tokenized.extend(["__FT__" + sub_token for sub_token in handle_clitics(token)])
+        else:
+            constraction_tokenized.append(token)
+    
+    def to_be_filtered(sub_token):
+        checklist = [
+            new_extra_tokenizer.match(sub_token) is None, 
+            abbreviation_tokenizer.match(sub_token) is None, 
+            decimal_tokenizer.match(sub_token) is None,
+            url_tokenizer.match(sub_token) is None,
+            package_tokenizer.match(sub_token) is None,
+            filepath_tokenizer.match(sub_token) is None
+        ]
+        return False in checklist
+    
+    filter_marked_tokens = mark_tokens(constraction_tokenized, to_be_filtered)
+    
+    non_alphanum_tokenized = []
+    for token in filter_marked_tokens:
+        non_alphanum_tokenized.extend(non_alphanum_tokenizer(token))
+    
+    eitheror_tokenized = []
+    for token in non_alphanum_tokenized:
+        if eitheror_tokenizer.match(token) is not None:
+            eitheror_tokenized.extend([token.split('/')[0], '/', token.split('/')[1]])
+        else:
+            eitheror_tokenized.append(token)
+    
+    clean_tokens = []
+    for token in eitheror_tokenized:
+        clean_tokens.append(token.replace("__FT__", ""))
+    
+    for token in clean_tokens:
+        yield token
 
 
 def tokenize():
@@ -41,7 +195,7 @@ def tokenize():
         posts = pickle.load(f)
 
     f = open('tokenization/tokenized_data.txt', 'w+')
-
+    #posts = posts[:100]
     post_no = 1
     for post in posts:
         f.write('POST {}\n\n'.format(post_no))
@@ -49,7 +203,7 @@ def tokenize():
         f.write('{}\n\n'.format('-' * 72))
 
         tokens = []
-        for token in Tokenizer(post):
+        for token in simple_tokenizer(post):
             if token:
                 tokens.append(token)
 
@@ -58,99 +212,10 @@ def tokenize():
 
         post_no += 1
 
-def _matches(regex):
-    """Regular expression compiling function decorator."""
-    def match_decorator(fn):
-        automaton = re.compile(regex, 32)
-        fn.split = automaton.split
-        fn.match = automaton.match
-        fn.search = automaton.search
-        return fn
-
-    return match_decorator
-
-
-@_matches(r'\s+')
-def space_tokenizer(sentence):
-    return [token for token in space_tokenizer.split(sentence) if token]
-
-@_matches(r'(<code>.*?<\/code>)')
-def code_tokenizer(sentence):
-    return [token.strip() for token in code_tokenizer.split(sentence) if token]
-
-@_matches(r'(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})')
-def url_tokenizer(sentence):
-    return [token.strip() for token in url_tokenizer.split(sentence) if token]
-
-@_matches(r'(\W)')
-def non_alphanum_tokenizer(sentence):
-    return [token for token in non_alphanum_tokenizer.split(sentence) if token]
-
-@_matches(r'([a-z][a-z0-9_]*(\.[a-z0-9_]+)+[0-9a-z_])')
-def package_tokenizer(sentence):
-    return [token for token in package_tokenizer.split(sentence) if token]
-
-@_matches(r'([(){}\[\],])')
-def bracket_tokenizer(sentence):
-    return [token for token in bracket_tokenizer.split(sentence) if token]
-
-@_matches(r'((.*)?(\/[^/\n ]*)+\/?\n?)')
-def filepath_tokenizer(sentence):
-    return [token for token in filepath_tokenizer.split(sentence) if token]
-
-@_matches(r'(([+|-]?\d+)?\.\d+)')
-def decimal_tokenizer(sentence):
-    return [token for token in decimal_tokenizer.split(sentence) if token]
-
-@_matches(r'(\S+\'\S+)')
-def constraction_tokenizer(sentence):
-    return [token for token in constraction_tokenizer.split(sentence) if token]
-
-@_matches(r'([a-zA-z]\.([a-zA-z]\.)+)')
-def abbreviation_tokenizer(sentence):
-    return [token for token in abbreviation_tokenizer.split(sentence) if token]
-
-@_matches(r'(\.\.\.)|(->)')
-def extra_tokenizer(sentence):
-    return [token for token in extra_tokenizer.split(sentence) if token]
-
-@_matches(r'(^\w+\/\w+$)')
-def eitheror_tokenizer(sentence):
-    return [token for token in eitheror_tokenizer.split(sentence) if token]
-
-
-
-def Tokenizer(text):
-    for token in code_tokenizer(text):
-        if not code_tokenizer.match(token):
-            for new_token in space_tokenizer(token):
-                if new_token.lower() not in emoticons:
-                    for next_token in extra_tokenizer(new_token):
-                        for nexter_token in extra_tokenizer(next_token): 
-                            for sub_token in bracket_tokenizer(nexter_token):
-                                if constraction_tokenizer.match(sub_token) is not None:
-                                    token_list =handle_clitics(sub_token)
-                                    for item in token_list:
-                                        yield item
-                                elif sub_token.lower() not in langs and extra_tokenizer.match(sub_token) is None and abbreviation_tokenizer.match(sub_token) is None and  decimal_tokenizer.match(sub_token) is None and url_tokenizer.match(sub_token) is None and package_tokenizer.match(sub_token) is None and filepath_tokenizer.match(sub_token) is None:
-                                    for sub_sub_token in non_alphanum_tokenizer(sub_token):
-                                        yield sub_sub_token
-                                else:
-                                    if eitheror_tokenizer.match(sub_token):
-                                        arr = sub_token.split('/')
-                                        yield arr[0]
-                                        yield '/'
-                                        yield arr[1]
-                                    else:
-                                        yield sub_token 
-                else:
-                    yield new_token
-        else:
-            yield token
-    yield None  # None to signal sentence terminals
 
 def main():
     tokenize()
+
 
 if __name__ == '__main__':
     main()
