@@ -7,7 +7,7 @@ import time
 import pickle
 from nltk import word_tokenize, pos_tag
 
-vectors_dir = "vectors/task_relevant_vectors.txt"
+vectors_dir = "application/task_relevant_vectors.txt"
 
 
 def get_stop_words(directory="data_analysis/stop_words.txt"):

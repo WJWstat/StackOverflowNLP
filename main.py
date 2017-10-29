@@ -46,3 +46,24 @@ if __name__ == '__main__':
             print('Running Task 2.3 - Preliminary Tokenization...')
             from data_analysis.preliminary_tokenizer import tokenize
             tokenize()
+    elif task == '3':
+        subtask = 'tokenize'
+        if (len(sys.argv > 2)):
+            subtask = sys.argv[2]
+
+        if (subtask == 'tokenize'):
+            print('Running Task 3.1 - Tokenizing...')
+            from tokenization.tokenizer_implemented import tokenize
+            tokenize()
+        elif (subtask == 'irregular_token_stats'):
+            print('Running Task 3.2 - Identifying Irregular Tokens...')
+            from tokenization.extract_token_stats import get_irregular_token_stats
+            get_irregular_token_stats()
+        elif (subtask == 'pos_tagging'):
+            print('Running Task 3.3 - POS Tagging...')
+            from tokenization.extract_token_stats import pos_tagging
+            pos_tagging()
+    elif task == '4':
+        print('Running Task 4.1 - Application...')
+        from application.application import main as m
+        m()
