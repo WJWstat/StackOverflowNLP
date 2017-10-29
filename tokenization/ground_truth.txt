@@ -529,7 +529,7 @@ In a java program String literals are stored in a separate portion of heap memor
 
 ------------------------------------------------------------------------
 
-["One", "more", "thing", "that", "I", "do", "n't", "see", "in", "previous", "answers", ":", "In", "Java", "the", "primitive", "wrappers", "classes", "like", "Integer", ",", "Double", ",", "Float", ",", "Boolean", "...", "and", "String", "are", "suposed", "to", "be", "invariant", ",", "so", "that", "when", "you", "pass", "an", "instance", "of", "those", "classes", "the", "invoked", "method", "could", "n't", "alter", "your", "data", "in", "any", "way", ",", "in", "opositi", "ó", "n", "with", "most", "of", "other", "classes", ",", "which", "internal", "data", "could", "be", "altered", "by", "its", "public", "methods", ".", "So", "that", "this", "classes", "only", "has", "'getter'", "methods", ",", "no", "'setters'", ",", "besides", "the", "constructor", ".", "In", "a", "java", "program", "String", "literals", "are", "stored", "in", "a", "separate", "portion", "of", "heap", "memory", ",", "only", "a", "instance", "for", "literal", ",", "to", "save", "memory", "reusing", "those", "instances"]
+["One", "more", "thing", "that", "I", "do", "n't", "see", "in", "previous", "answers", ":", "In", "Java", "the", "primitive", "wrappers", "classes", "like", "Integer", ",", "Double", ",", "Float", ",", "Boolean", "...", "and", "String", "are", "suposed", "to", "be", "invariant", ",", "so", "that", "when", "you", "pass", "an", "instance", "of", "those", "classes", "the", "invoked", "method", "could", "n't", "alter", "your", "data", "in", "any", "way", ",", "in", "opositión", "with", "most", "of", "other", "classes", ",", "which", "internal", "data", "could", "be", "altered", "by", "its", "public", "methods", ".", "So", "that", "this", "classes", "only", "has", "'", "getter", "'", "methods", ",", "no", "'", "setters, "'", ",", "besides", "the", "constructor", ".", "In", "a", "java", "program", "String", "literals", "are", "stored", "in", "a", "separate", "portion", "of", "heap", "memory", ",", "only", "a", "instance", "for", "literal", ",", "to", "save", "memory", "reusing", "those", "instances"]
 
 ========================================================================
 
@@ -1272,7 +1272,7 @@ You should throw an IllegalArgumentException, as it will make it obvious to the 
 
 ------------------------------------------------------------------------
 
-["You", "should", "throw", "an", "IllegalArgumentException", ",", "as", "it", "will", "make", "it", "obvious", "to", "the", "programmer", "that", "he", "has", "done", "something", "invalid", ".", "Developers", "are", "so", "used", "to", "seeing", "NPE", "thrown", "by", "the", "VM", ",", "that", "any", "programmer", "would", "not", "immediately", "realize", "his", "error", ",", "and", "would", "start", "looking", "around", "randomly", ",", "or", "worse", ",", "blame", "your", "code", "for", "being", "'buggy'", "."]
+["You", "should", "throw", "an", "IllegalArgumentException", ",", "as", "it", "will", "make", "it", "obvious", "to", "the", "programmer", "that", "he", "has", "done", "something", "invalid", ".", "Developers", "are", "so", "used", "to", "seeing", "NPE", "thrown", "by", "the", "VM", ",", "that", "any", "programmer", "would", "not", "immediately", "realize", "his", "error", ",", "and", "would", "start", "looking", "around", "randomly", ",", "or", "worse", ",", "blame", "your", "code", "for", "being", "'", "buggy", "'", "."]
 
 ========================================================================
 
