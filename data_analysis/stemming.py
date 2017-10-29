@@ -12,6 +12,7 @@ def stem_posts():
 
     porter_stemmer = nltk.stem.porter.PorterStemmer()
     stems = {}  # dictionary of stems {stem: { 'orig_words': (set), 'count': 123 }, ...}
+    words = {}  # dictionary of words {word: count}
 
     for post in posts:
         post = re.sub(r'<code>.*</code>', '', post)  # remove inline code snippets
@@ -24,6 +25,11 @@ def stem_posts():
                 token = re.sub(r'[^a-z]', '', token)  # remove any non-alphabet characters
                 if token == '' or token in stop_words:
                     continue
+                    
+                if token in words.keys():
+                    words[token] += 1
+                else:
+                    words[token] = 1
 
                 stem = porter_stemmer.stem(token)
 
@@ -41,9 +47,14 @@ def stem_posts():
         counter -= 1
         if counter == 0:
             break
+            
+    with open('data_analysis/frequent_words.txt', 'w') as f:
+	    frequent_word_list = sorted(words, key=words.__getitem__, reverse=True)[:20]
+	    for word in frequent_word_list:
+	    	f.write(str(word) + ': ' + str(words[word]) + '\n')
 
-    with open('pickles/stems.pkl', 'wb') as f:
-        pickle.dump(stems, f)
+    #with open('pickles/stems.pkl', 'wb') as f:
+    #    pickle.dump(stems, f)
 
 if __name__ == '__main__':
     stem_posts()
