@@ -7,19 +7,19 @@ def get_irregular_token_stats():
         tokens = pickle.load(f)
 
     f = open('tokenization/irregular_token_stats.txt', 'w+')
-    
+
     d = enchant.Dict("en_US")
-    
+
     irregular_tokens = {}
     for token in tokens:
         if not d.check(token):
             irregular_tokens[token] = irregular_tokens.get(token, 0) + 1
-    
-    count = 0 
-    
-    f.write("{:10} : {:7}\n".format("Token","Count"))
-    for key, value in sorted(irregular_tokens.items(), key=lambda x:x[1], reverse=True):
-        f.write("{:10} : {:7}\n".format(key,value))
+
+    count = 0
+
+    f.write("{:10} : {:7}\n".format("Token", "Count"))
+    for key, value in sorted(irregular_tokens.items(), key=lambda x: x[1], reverse=True):
+        f.write("{:10} : {:7}\n".format(key, value))
         count += 1
         if count == 20:
             break

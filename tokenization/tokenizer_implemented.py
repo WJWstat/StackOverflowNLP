@@ -28,12 +28,14 @@ def space_tokenizer(sentence):
     else:
         return [sentence]
 
+
 @_matches(r'(<code>.*?<\/code>)')
 def code_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
         return [token for token in code_tokenizer.split(sentence) if token]
     else:
         return [sentence]
+
 
 @_matches(r'(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})')
 def url_tokenizer(sentence):
@@ -42,12 +44,14 @@ def url_tokenizer(sentence):
     else:
         return [sentence]
 
+
 @_matches(r'(\W)')
 def non_alphanum_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
         return [token for token in non_alphanum_tokenizer.split(sentence) if token]
     else:
         return [sentence]
+
 
 @_matches(r'([a-z][a-z0-9_]*(\.[a-z0-9_]+)+[0-9a-z_])')
 def package_tokenizer(sentence):
@@ -56,12 +60,14 @@ def package_tokenizer(sentence):
     else:
         return [sentence]
 
+
 @_matches(r'((.*)?(\/[^/\n ]*)+\/?\n?)')
 def filepath_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
         return [token for token in filepath_tokenizer.split(sentence) if token]
     else:
         return [sentence]
+
 
 @_matches(r'(([+|-]?\d+)?\.\d+)')
 def decimal_tokenizer(sentence):
@@ -70,12 +76,14 @@ def decimal_tokenizer(sentence):
     else:
         return [sentence]
 
+
 @_matches(r'(\S+\'\S+)')
 def constraction_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
         return [token for token in constraction_tokenizer.split(sentence) if token]
     else:
         return [sentence]
+
 
 @_matches(r'([a-zA-z]\.([a-zA-z]\.)+)')
 def abbreviation_tokenizer(sentence):
@@ -84,12 +92,14 @@ def abbreviation_tokenizer(sentence):
     else:
         return [sentence]
 
+
 @_matches(r'(\.\.\.|->|[(){}\[\],])')
 def new_extra_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
         return [token for token in new_extra_tokenizer.split(sentence) if token]
     else:
         return [sentence]
+
 
 @_matches(r'(^\w+[\/]\w+$)')
 def eitheror_tokenizer(sentence):
@@ -109,7 +119,7 @@ def handle_clitics(token):
         tokens.append(token[:-2])
         tokens.append(token[-2:])
     else:
-        idx=0
+        idx = 0
         sub_tokens = [token]
         length = len(token)
         if length > 1:
@@ -136,13 +146,15 @@ def simple_tokenizer(text):
         else:
             space_tokenized.append(token)
 
-    emoticon_and_lang_marked_tokens = mark_tokens(space_tokenized, lambda token : token.lower() in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
+    emoticon_and_lang_marked_tokens = mark_tokens(space_tokenized, lambda token: token.lower(
+    ) in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
 
     new_extra_tokenized = []
     for token in emoticon_and_lang_marked_tokens:
         new_extra_tokenized.extend(new_extra_tokenizer(token))
 
-    emoticon_and_lang_marked_tokens = mark_tokens(new_extra_tokenized, lambda token : token.lower() in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
+    emoticon_and_lang_marked_tokens = mark_tokens(new_extra_tokenized, lambda token: token.lower(
+    ) in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
 
     constraction_tokenized = []
     for token in emoticon_and_lang_marked_tokens:
@@ -205,10 +217,11 @@ def tokenize():
         f.write('{}\n\n\n\n'.format('=' * 72))
         complete_token_list.extend(tokens)
         post_no += 1
-    
+
     # Pickle data.
     with open('pickles/tokens.pkl', 'wb') as f:
         pickle.dump(complete_token_list, f)
+
 
 def main():
     tokenize()
