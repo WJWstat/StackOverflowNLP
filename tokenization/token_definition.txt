@@ -5,7 +5,7 @@ Token Definition:
     - Clitics ("'ll", "'ve", etc.)
     - Text Emojis (';)', ':P', etc.)
     - Programming Languages ('C#', 'C++', '.NET', etc.)
-    - Abbreviations ('e.g.', 'i.e.', etc.)
+    - Abbreviations ('e.g.', 'i.e.', 'etc.', etc.)
     - Decimal Numbers
     - URLs ('java.net', 'http://asm.objectweb.org/', etc.)
     - Package Names ('com.foo.bar.class', etc.)
