@@ -25,7 +25,7 @@ def stem_posts():
                 token = re.sub(r'[^a-z]', '', token)  # remove any non-alphabet characters
                 if token == '' or token in stop_words:
                     continue
-                    
+
                 if token in words.keys():
                     words[token] += 1
                 else:
@@ -47,13 +47,13 @@ def stem_posts():
         counter -= 1
         if counter == 0:
             break
-            
-    with open('data_analysis/frequent_words.txt', 'w') as f:
-	    frequent_word_list = sorted(words, key=words.__getitem__, reverse=True)[:20]
-	    for word in frequent_word_list:
-	    	f.write(str(word) + ': ' + str(words[word]) + '\n')
 
-    #with open('pickles/stems.pkl', 'wb') as f:
+    with open('data_analysis/frequent_words.txt', 'w') as f:
+        frequent_word_list = sorted(words, key=words.__getitem__, reverse=True)[:20]
+        for word in frequent_word_list:
+            f.write(str(word) + ': ' + str(words[word]) + '\n')
+
+    # with open('pickles/stems.pkl', 'wb') as f:
     #    pickle.dump(stems, f)
 
 if __name__ == '__main__':
