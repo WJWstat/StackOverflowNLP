@@ -94,20 +94,28 @@ def abbreviation_tokenizer(sentence):
 
 
 @_matches(r'(\.\.\.|->|[(){}\[\],])')
-def new_extra_tokenizer(sentence):
+def ellipsis_bracket_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
-        return [token for token in new_extra_tokenizer.split(sentence) if token]
+        return [token for token in ellipsis_bracket_tokenizer.split(sentence) if token]
     else:
         return [sentence]
 
 
-@_matches(r'(^\w+[\/]\w+$)')
+@_matches(r'(^[^\/]+[\/][^\/]+$)')
 def eitheror_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
         return [token for token in eitheror_tokenizer.split(sentence) if token]
     else:
         return [sentence]
 
+
+@_matches(r'(.*\.[\s]*$)+')
+def period_tokenizer(sentence):
+    if not re.match(r'.*(__FT__).*', sentence):
+        idx = sentence.rindex('.')
+        return [sentence[:idx], '.']
+    else:
+        return [sentence]
 
 def mark_tokens(tokens, filter):
     return ["__FT__" + token if filter(token) and "__FT__" not in token else token for token in tokens]
@@ -141,19 +149,31 @@ def simple_tokenizer(text):
     space_tokenized = []
     for token in code_tokenized:
         if not code_tokenizer.match(token):
-            space_tokenized_token = space_tokenizer(token)
-            space_tokenized.extend(space_tokenized_token)
+            space_tokenized.extend(space_tokenizer(token))
         else:
             space_tokenized.append(token)
+
 
     emoticon_and_lang_marked_tokens = mark_tokens(space_tokenized, lambda token: token.lower(
     ) in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
 
-    new_extra_tokenized = []
+    ellipsis_bracket_tokenized = []
     for token in emoticon_and_lang_marked_tokens:
-        new_extra_tokenized.extend(new_extra_tokenizer(token))
+        ellipsis_bracket_tokenized.extend(ellipsis_bracket_tokenizer(token))
 
-    emoticon_and_lang_marked_tokens = mark_tokens(new_extra_tokenized, lambda token: token.lower(
+    special_periods_tokens = mark_tokens(ellipsis_bracket_tokenized, lambda token: token.lower() in ['e.g.', 'i.e.', '...', 'etc.'])
+    
+    period_tokenized = []
+    for token in special_periods_tokens:
+        if not code_tokenizer.match(token) and period_tokenizer.match(token):
+            print(token)
+            returned = period_tokenizer(token)
+            period_tokenized.extend(returned)
+            print(returned)
+        else:
+            period_tokenized.append(token)
+
+    emoticon_and_lang_marked_tokens = mark_tokens(period_tokenized, lambda token: token.lower(
     ) in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
 
     constraction_tokenized = []
@@ -165,7 +185,7 @@ def simple_tokenizer(text):
 
     def to_be_filtered(sub_token):
         checklist = [
-            new_extra_tokenizer.match(sub_token) is None,
+            ellipsis_bracket_tokenizer.match(sub_token) is None,
             abbreviation_tokenizer.match(sub_token) is None,
             decimal_tokenizer.match(sub_token) is None,
             url_tokenizer.match(sub_token) is None,
@@ -182,7 +202,7 @@ def simple_tokenizer(text):
 
     eitheror_tokenized = []
     for token in non_alphanum_tokenized:
-        if eitheror_tokenizer.match(token) is not None:
+        if eitheror_tokenizer.match(token) is not None and code_tokenizer.match(token[6:]) is None:
             eitheror_tokenized.extend([token.split('/')[0], '/', token.split('/')[1]])
         else:
             eitheror_tokenized.append(token)
@@ -200,7 +220,7 @@ def tokenize():
         posts = pickle.load(f)
 
     f = open('tokenization/tokenized_data.txt', 'w+')
-    # posts = posts[:100]
+    posts = posts[:100]
     complete_token_list = []
     post_no = 1
     for post in posts:
