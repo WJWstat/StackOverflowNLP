@@ -53,7 +53,7 @@ def non_alphanum_tokenizer(sentence):
         return [sentence]
 
 
-@_matches(r'([a-z][a-z0-9_]*(\.[a-z0-9_]+)+[0-9a-z_])')
+@_matches(r'([A-Za-z][A-Za-z0-9_]*(\.[a-z0-9_]+)+[0-9a-z_A-Z])')
 def package_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
         return [token for token in package_tokenizer.split(sentence) if token]
@@ -69,7 +69,7 @@ def filepath_tokenizer(sentence):
         return [sentence]
 
 
-@_matches(r'(([+|-]?\d+)?\.\d+)')
+@_matches(r'(([+|-]?\d+)?\.((\d+)|[\w]))')
 def decimal_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
         return [token for token in decimal_tokenizer.split(sentence) if token]
@@ -166,10 +166,8 @@ def simple_tokenizer(text):
     period_tokenized = []
     for token in special_periods_tokens:
         if not code_tokenizer.match(token) and period_tokenizer.match(token):
-            print(token)
             returned = period_tokenizer(token)
             period_tokenized.extend(returned)
-            print(returned)
         else:
             period_tokenized.append(token)
 
