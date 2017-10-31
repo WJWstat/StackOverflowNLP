@@ -856,7 +856,7 @@ You'll also want to look at the Pattern class.
 
 ------------------------------------------------------------------------
 
-["Sun", "itself", "recommends", "staying", "away", "from", "StringTokenizer", "and", "using", "the", "String", ".", "spilt", "method", "instead", ".", "You", "'ll", "also", "want", "to", "look", "at", "the", "Pattern", "class", "."]
+["Sun", "itself", "recommends", "staying", "away", "from", "StringTokenizer", "and", "using", "the", "String.spilt", "method", "instead", ".", "You", "'ll", "also", "want", "to", "look", "at", "the", "Pattern", "class", "."]
 
 ========================================================================
 
