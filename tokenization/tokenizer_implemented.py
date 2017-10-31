@@ -235,7 +235,7 @@ def tokenize():
         f.write('{}\n\n\n\n'.format('=' * 72))
         complete_token_list.extend(tokens)
         post_no += 1
-
+    print("Total number of tokens: ", len(complete_token_list))
     # Pickle data.
     with open('pickles/tokens.pkl', 'wb') as f:
         pickle.dump(complete_token_list, f)
