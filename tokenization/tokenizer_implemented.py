@@ -1,6 +1,8 @@
 import re
 import pickle
 
+true_negatives = 0
+true_positives = 0
 
 with open('tokenization/programming_languages.txt', 'r') as file:
     langs = file.read().split()
@@ -143,6 +145,8 @@ def handle_clitics(token):
 
 
 def simple_tokenizer(text):
+    global true_positives
+    global true_negatives
 
     code_tokenized = code_tokenizer(text)
 
@@ -207,6 +211,12 @@ def simple_tokenizer(text):
 
     clean_tokens = []
     for token in eitheror_tokenized:
+        if token.find("__FT__") >= 0 :
+            true_negatives+=1
+        else:
+            true_positives+=1
+
+    for token in eitheror_tokenized:
         clean_tokens.append(token.replace("__FT__", ""))
 
     for token in clean_tokens:
@@ -218,7 +228,7 @@ def tokenize():
         posts = pickle.load(f)
 
     f = open('tokenization/tokenized_data.txt', 'w+')
-    posts = posts[:100]
+    # posts = posts[:100]
     complete_token_list = []
     post_no = 1
     for post in posts:
@@ -235,7 +245,10 @@ def tokenize():
         f.write('{}\n\n\n\n'.format('=' * 72))
         complete_token_list.extend(tokens)
         post_no += 1
-    print("Total number of tokens: ", len(complete_token_list))
+
+    print("Total Number of Tokens: ", len(complete_token_list))
+    print("Positives: ", true_positives)
+    print("Negatives: ", true_negatives)
     # Pickle data.
     with open('pickles/tokens.pkl', 'wb') as f:
         pickle.dump(complete_token_list, f)
