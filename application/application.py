@@ -4,7 +4,6 @@ import pickle
 import html
 import re
 import time
-import pickle
 from nltk import word_tokenize, pos_tag
 
 vectors_dir = "application/task_relevant_vectors.txt"
@@ -31,7 +30,11 @@ def clean_q(qs):
 
 def clean_text_and_tokenize(q_string):
     '''Replace parts with custom tokenizer and cleaners if needed'''
-    q_tokens = word_tokenize(q_string)  # Replace with our own if needed
+    try:
+        q_tokens = word_tokenize(q_string)  # Replace with our own if needed
+    catch:
+        nltk.download('punkt')
+        q_tokens = word_tokenize(q_string)
     q_string_clean = [token.lower() for token in q_tokens if token.lower() not in stop_words]
     vocab.extend(q_string_clean)
     return q_string_clean
@@ -43,9 +46,11 @@ def get_all_existing_questions(directory="pickles/threads.pkl"):  # give the thr
     qs = [clean_q(threads[i][0]['Body']) for i in threads.keys()]
     return qs
 
-
-from nltk.corpus import wordnet as wn
-
+try:
+    from nltk.corpus import wordnet as wn
+except:
+    nltk.download("wordnet")
+    from nltk.corpus import wordnet as wn
 
 def obtain_only_relevant_vectors(word_vectors):
     '''To do: Complete to only obtain vectors for tokens provided in posts- saves memory in loading vectors related to task, but can lead to potential degradation in similarity scores'''
