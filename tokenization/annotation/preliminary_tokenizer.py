@@ -46,3 +46,5 @@ for post in posts:
     f.write('{}\n\n\n\n'.format('=' * 72))
 
     post_no += 1
+
+f.close()

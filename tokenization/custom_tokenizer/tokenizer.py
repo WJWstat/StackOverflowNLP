@@ -255,6 +255,8 @@ def tokenize():
     with open('pickles/tokens.pkl', 'wb') as f:
         pickle.dump(complete_token_list, f)
 
+    f.close()
+
 
 if __name__ == '__main__':
     tokenize()
