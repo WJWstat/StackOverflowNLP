@@ -52,9 +52,11 @@ The actual custom tokenizer is implemented in `tokenization/custom_tokenizer/tok
 ### Further Analysis
 
 Further analysis is performed by investigating irregular tokens (i.e. non-English words) using the custom tokenizer in `tokenization/custom_tokenizer/further_analysis.py`.
-### Application: Detecting duplicate questions and computing question similarity
+
+### Application: Detecting Question Similarity
 
 Our application computes question similarity by using a weighted ensemble of wordnet synonym distance, word vector distance and word mover's distance. 
+
 We obtain stack exchange specific word vectors from https://github.com/taolei87/askubuntu, and further pruned it (to save memory) by only including word vectors for words in our corpus' vocabulary.
 
 Our application's source code is located in `application/application.py`.
@@ -65,7 +67,8 @@ To use the application with terminal interface, run:
 $ python application/application.py
 ```
 
-Upon running, either press 1 to enter a question to find potential duplicates for, or press -1 to exit the program. 
+Upon running, either press 1 to enter a question to find potential duplicates for, or press -1 to exit the program.
+
 Depending on the underlying processor, finding duplicate questions may take a time range of 10s to 1min. 
 
 ## Dependencies
