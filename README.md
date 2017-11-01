@@ -4,13 +4,22 @@ This repository contains the source code used to perform basic NLP tasks on post
 
 ## Setup
 
-This project is entirely written in Python 3 and depends on the packages listed in `requirements.txt`. In order to setup your development environment, please simply run:
+This project is entirely written in [Python 3](https://www.python.org/downloads/) and depends on the packages listed in `requirements.txt`. In order to setup your development environment, please run:
 
 ```
 $ pip install -r requirements.txt
 ```
 
 You can also find a list of complete dependencies at the end of this document.
+
+In order to use the NLTK library for tokenizing, POS tagging and stemming, you will need to download the NLTK pickled models and corpora. On a python interpreter enter the following.
+
+```
+>>> import nltk
+>>> nltk.download('punkt')
+>>> nltk.download('averaged_perceptron_tagger')
+>>> nltk.download('wordnet')
+```
 
 ## How To Run?
 
@@ -35,11 +44,15 @@ To find the most frequent words & stems in the dataset, run:
 $ python data_analysis/stemming.py
 ```
 
+This will store the most frequent stems and the most frequent words in the files data_analysis/frequent_stems.txt and data_analysis/frequent_words.txt.
+
 To run POS tagging on the first 10 sentences of the dataset, run:
 
 ```
 $ python data_analysis/pos_tagging.py
 ```
+
+This will store the obtained POS tags in the file data_analysis/sentences_pos_tags.txt.
 
 ### Tokenization
 
@@ -47,7 +60,17 @@ Since off-the-shelf tokenizers are not robust enough to handle tokens that are s
 
 The token definition can be found in `tokenization/annotation/token_definition.txt`. Based on this token definition, a ground truth is established for the first 100 posts in `tokenization/annotation/ground_truth.txt`, which will be used to benchmark the performance of our custom tokenizer. This ground truth is created by running a preliminary tokenizer (`tokenization/annotation/preliminary_tokenizer.py`) and manually correcting the tokenization, if needed.
 
-The actual custom tokenizer is implemented in `tokenization/custom_tokenizer/tokenizer.py`.
+The actual custom tokenizer built based on regular expression rules, is implemented in `tokenization/custom_tokenizer/tokenizer.py`. A sample tokenized sentence is shown below.
+
+```
+Sentence: "Maybe this might help: JSefa
+
+You can read CSV file with this tool and serialize it to XML."
+
+------------------------------------------------------------------------
+
+List of Tokens: ["Maybe", "this", "might", "help", ":", "JSefa", "You", "can", "read", "CSV", "file", "with", "this", "tool", "and", "serialize", "it", "to", "XML", "."]
+```
 
 ### Further Analysis
 
@@ -69,7 +92,7 @@ $ python application/application.py
 
 Upon running, either press 1 to enter a question to find potential duplicates for, or press -1 to exit the program.
 
-Depending on the underlying processor, finding duplicate questions may take a time range of 10s to 1min. 
+Depending on the underlying processor, finding duplicate questions may take a time range of 10s to 1min.
 
 ## Dependencies
 
