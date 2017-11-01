@@ -32,7 +32,7 @@ def clean_text_and_tokenize(q_string):
     '''Replace parts with custom tokenizer and cleaners if needed'''
     try:
         q_tokens = word_tokenize(q_string)  # Replace with our own if needed
-    catch:
+    except:
         nltk.download('punkt')
         q_tokens = word_tokenize(q_string)
     q_string_clean = [token.lower() for token in q_tokens if token.lower() not in stop_words]
