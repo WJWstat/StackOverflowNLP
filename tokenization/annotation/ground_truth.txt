@@ -211,7 +211,7 @@ I personally only use the private member-behind when not doing so would cause th
 
 ------------------------------------------------------------------------
 
-["Well", ",", "it", "seems", "with", "C#", "3.0", "properties'", "default", "implementation", ",", "the", "decision", "is", "taken", "for", "you", ";", "you", "HAVE", "to", "set", "the", "property", "using", "the", "(", "possibly", "private", ")", "property", "setter", ".", "I", "personally", "only", "use", "the", "private", "member", "-", "behind", "when", "not", "doing", "so", "would", "cause", "the", "object", "to", "fall", "in", "an", "less", "than", "desirable", "state", ",", "such", "as", "when", "initializing", "or", "when", "caching", "/", "lazy", "loading", "is", "involved", "."]
+["Well", ",", "it", "seems", "with", "C#", "3.0", "properties", "'", "default", "implementation", ",", "the", "decision", "is", "taken", "for", "you", ";", "you", "HAVE", "to", "set", "the", "property", "using", "the", "(", "possibly", "private", ")", "property", "setter", ".", "I", "personally", "only", "use", "the", "private", "member", "-", "behind", "when", "not", "doing", "so", "would", "cause", "the", "object", "to", "fall", "in", "an", "less", "than", "desirable", "state", ",", "such", "as", "when", "initializing", "or", "when", "caching", "/", "lazy", "loading", "is", "involved", "."]
 
 ========================================================================
 
