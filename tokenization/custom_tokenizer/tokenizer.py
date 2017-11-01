@@ -4,10 +4,10 @@ import pickle
 true_negatives = 0
 true_positives = 0
 
-with open('tokenization/programming_languages.txt', 'r') as file:
+with open('tokenization/custom_tokenizer/programming_languages.txt', 'r') as file:
     langs = file.read().split()
 
-with open('tokenization/text_emoticons.txt', 'r') as file:
+with open('tokenization/custom_tokenizer/text_emoticons.txt', 'r') as file:
     emoticons = file.read().split()
 
 
@@ -80,9 +80,9 @@ def decimal_tokenizer(sentence):
 
 
 @_matches(r'(\S+\'\S+)')
-def constraction_tokenizer(sentence):
+def contraction_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
-        return [token for token in constraction_tokenizer.split(sentence) if token]
+        return [token for token in contraction_tokenizer.split(sentence) if token]
     else:
         return [sentence]
 
@@ -121,7 +121,7 @@ def period_tokenizer(sentence):
 
 
 def mark_tokens(tokens, filter):
-    return ["__FT__" + token if filter(token) and "__FT__" not in token else token for token in tokens]
+    return ['__FT__' + token if filter(token) and '__FT__' not in token else token for token in tokens]
 
 
 def handle_clitics(token):
@@ -145,7 +145,7 @@ def handle_clitics(token):
     return tokens
 
 
-def simple_tokenizer(text):
+def custom_tokenizer(text):
     global true_positives
     global true_negatives
 
@@ -165,8 +165,8 @@ def simple_tokenizer(text):
     for token in emoticon_and_lang_marked_tokens:
         ellipsis_bracket_tokenized.extend(ellipsis_bracket_tokenizer(token))
 
-    special_periods_tokens = mark_tokens(ellipsis_bracket_tokenized, lambda token: token.lower() in [
-                                         'e.g.', 'i.e.', '...', 'etc.'])
+    special_periods_tokens = mark_tokens(ellipsis_bracket_tokenized, lambda token: token.lower() in
+                                         ['e.g.', 'i.e.', '...', 'etc.'])
 
     period_tokenized = []
     for token in special_periods_tokens:
@@ -181,8 +181,8 @@ def simple_tokenizer(text):
 
     constraction_tokenized = []
     for token in emoticon_and_lang_marked_tokens:
-        if constraction_tokenizer.match(token) is not None:
-            constraction_tokenized.extend(["__FT__" + sub_token for sub_token in handle_clitics(token)])
+        if contraction_tokenizer.match(token) is not None:
+            constraction_tokenized.extend(['__FT__' + sub_token for sub_token in handle_clitics(token)])
         else:
             constraction_tokenized.append(token)
 
@@ -212,13 +212,13 @@ def simple_tokenizer(text):
 
     clean_tokens = []
     for token in eitheror_tokenized:
-        if token.find("__FT__") >= 0:
+        if token.find('__FT__') >= 0:
             true_negatives += 1
         else:
             true_positives += 1
 
     for token in eitheror_tokenized:
-        clean_tokens.append(token.replace("__FT__", ""))
+        clean_tokens.append(token.replace('__FT__', ''))
 
     for token in clean_tokens:
         yield token
@@ -228,8 +228,8 @@ def tokenize():
     with open('pickles/posts.pkl', 'rb') as f:
         posts = pickle.load(f)
 
-    f = open('tokenization/tokenized_data.txt', 'w+')
-    # posts = posts[:100]
+    f = open('tokenization/custom_tokenizer/tokenized_data.txt', 'w+')
+
     complete_token_list = []
     post_no = 1
     for post in posts:
@@ -238,7 +238,7 @@ def tokenize():
         f.write('{}\n\n'.format('-' * 72))
 
         tokens = []
-        for token in simple_tokenizer(post):
+        for token in custom_tokenizer(post):
             if token:
                 tokens.append(token)
 
@@ -247,17 +247,14 @@ def tokenize():
         complete_token_list.extend(tokens)
         post_no += 1
 
-    print("Total Number of Tokens: ", len(complete_token_list))
-    print("Positives: ", true_positives)
-    print("Negatives: ", true_negatives)
+    print('Total Number of Tokens: ', len(complete_token_list))
+    print('Positives: ', true_positives)
+    print('Negatives: ', true_negatives)
+
     # Pickle data.
     with open('pickles/tokens.pkl', 'wb') as f:
         pickle.dump(complete_token_list, f)
 
 
-def main():
-    tokenize()
-
-
 if __name__ == '__main__':
-    main()
+    tokenize()

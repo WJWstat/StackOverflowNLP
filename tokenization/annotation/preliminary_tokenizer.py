@@ -4,7 +4,7 @@ import pickle
 with open('pickles/posts.pkl', 'rb') as f:
     posts = pickle.load(f)
 
-f = open('tokenization/ground_truth.txt', 'w+')
+f = open('tokenization/annotation/ground_truth.txt', 'w+')
 
 posts = posts[:100]
 post_no = 1
