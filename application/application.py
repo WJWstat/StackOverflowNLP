@@ -8,6 +8,20 @@ from nltk import word_tokenize, pos_tag
 
 vectors_dir = "application/task_relevant_vectors.txt"
 
+def test_nltk_packages():
+    test_string = "Hello world"
+    try:
+        tokens = word_tokenize(test_string)  # Replace with our own if needed
+    except:
+        nltk.download('punkt')
+        tokens = word_tokenize(test_string)
+    try:
+        tags = pos_tag(tokens)
+    except:
+        nltk.download("averaged_perceptron_tagger")
+        tags = pos_tag(tokens)
+        
+test_nltk_packages() 
 
 def get_stop_words(directory="data_analysis/stop_words.txt"):
     with open(directory, 'r') as f:
@@ -30,11 +44,8 @@ def clean_q(qs):
 
 def clean_text_and_tokenize(q_string):
     '''Replace parts with custom tokenizer and cleaners if needed'''
-    try:
-        q_tokens = word_tokenize(q_string)  # Replace with our own if needed
-    except:
-        nltk.download('punkt')
-        q_tokens = word_tokenize(q_string)
+    
+    q_tokens = word_tokenize(q_string)  # Replace with our own if needed
     q_string_clean = [token.lower() for token in q_tokens if token.lower() not in stop_words]
     vocab.extend(q_string_clean)
     return q_string_clean
@@ -97,6 +108,7 @@ def get_synonyms_wnet(word, word_tag):
         return None  # no synonym found
 
 
+        
 def question_similarity_wnet(q1, q2, symm=True):
     '''
     Inputs q1, q2 are assumed to be cleaned string tokens lists representing questions
@@ -104,9 +116,10 @@ def question_similarity_wnet(q1, q2, symm=True):
     if(symm):
         return (question_similarity_wnet(q1, q2, False) + question_similarity_wnet(q2, q1, False)) / 2
     '''Tokenization and tagging'''
+    
     q1_tagged = pos_tag(q1)
     q2_tagged = pos_tag(q2)
-
+ 
     '''Obtain synonyms'''
     synsets1 = [get_synonyms_wnet(*word_and_tag) for word_and_tag in q1_tagged]
     synsets2 = [get_synonyms_wnet(*word_and_tag) for word_and_tag in q2_tagged]
