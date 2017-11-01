@@ -52,6 +52,7 @@ except:
     nltk.download("wordnet")
     from nltk.corpus import wordnet as wn
 
+
 def obtain_only_relevant_vectors(word_vectors):
     '''To do: Complete to only obtain vectors for tokens provided in posts- saves memory in loading vectors related to task, but can lead to potential degradation in similarity scores'''
     ndims = word_vectors.vector_size

@@ -62,10 +62,11 @@ def pos_tag_sentences():
         # words = nltk.word_tokenize(sentence)
         pos_tags[sentence] = nltk.pos_tag(words)
 
-    with open('tokenization/pos_tags_using_tokenizer.txt','w') as f:
+    with open('tokenization/pos_tags_using_tokenizer.txt', 'w') as f:
         for key in list(pos_tags.keys()):
             f.write(key)
-            f.write('\n\n[{}]\n\n'.format(', '.join(("('" + token + "', '" +tag+"')") for token, tag in pos_tags[key])))
+            f.write('\n\n[{}]\n\n'.format(', '.join(("('" + token + "', '" + tag + "')")
+                                                    for token, tag in pos_tags[key])))
             f.write('\n----\n')
 
     with open('pickles/pos_tags_using_tokenizer.pkl', 'wb') as f:

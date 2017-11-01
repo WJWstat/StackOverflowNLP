@@ -119,6 +119,7 @@ def period_tokenizer(sentence):
     else:
         return [sentence]
 
+
 def mark_tokens(tokens, filter):
     return ["__FT__" + token if filter(token) and "__FT__" not in token else token for token in tokens]
 
@@ -157,7 +158,6 @@ def simple_tokenizer(text):
         else:
             space_tokenized.append(token)
 
-
     emoticon_and_lang_marked_tokens = mark_tokens(space_tokenized, lambda token: token.lower(
     ) in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
 
@@ -165,8 +165,9 @@ def simple_tokenizer(text):
     for token in emoticon_and_lang_marked_tokens:
         ellipsis_bracket_tokenized.extend(ellipsis_bracket_tokenizer(token))
 
-    special_periods_tokens = mark_tokens(ellipsis_bracket_tokenized, lambda token: token.lower() in ['e.g.', 'i.e.', '...', 'etc.'])
-    
+    special_periods_tokens = mark_tokens(ellipsis_bracket_tokenized, lambda token: token.lower() in [
+                                         'e.g.', 'i.e.', '...', 'etc.'])
+
     period_tokenized = []
     for token in special_periods_tokens:
         if not code_tokenizer.match(token) and period_tokenizer.match(token):
@@ -211,10 +212,10 @@ def simple_tokenizer(text):
 
     clean_tokens = []
     for token in eitheror_tokenized:
-        if token.find("__FT__") >= 0 :
-            true_negatives+=1
+        if token.find("__FT__") >= 0:
+            true_negatives += 1
         else:
-            true_positives+=1
+            true_positives += 1
 
     for token in eitheror_tokenized:
         clean_tokens.append(token.replace("__FT__", ""))
