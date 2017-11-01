@@ -13,10 +13,11 @@ except:
 
 vectors_dir = "application/task_relevant_vectors.txt"
 
+
 def test_nltk_packages():
     test_string = "Hello world"
     try:
-        tokens = word_tokenize(test_string)  # Replace with our own if needed
+        tokens = word_tokenize(test_string)  # replace with our own if needed
     except:
         nltk.download('punkt')
         tokens = word_tokenize(test_string)
@@ -26,11 +27,12 @@ def test_nltk_packages():
         nltk.download("averaged_perceptron_tagger")
         tags = pos_tag(tokens)
     try:
-        synsets = wn.synsets('world','n')[0]
+        synsets = wn.synsets('world', 'n')[0]
     except:
         nltk.download("wordnet")
-        synsets = wn.synsets('world','n')[0]
-test_nltk_packages() 
+        synsets = wn.synsets('world', 'n')[0]
+test_nltk_packages()
+
 
 def get_stop_words(directory="data_analysis/stop_words.txt"):
     with open(directory, 'r') as f:
@@ -53,8 +55,7 @@ def clean_q(qs):
 
 def clean_text_and_tokenize(q_string):
     '''Replace parts with custom tokenizer and cleaners if needed'''
-    
-    q_tokens = word_tokenize(q_string)  # Replace with our own if needed
+    q_tokens = word_tokenize(q_string)  # replace with our own if needed
     q_string_clean = [token.lower() for token in q_tokens if token.lower() not in stop_words]
     vocab.extend(q_string_clean)
     return q_string_clean
@@ -67,9 +68,7 @@ def get_all_existing_questions(directory="pickles/threads.pkl"):  # give the thr
     return qs
 
 
-
 def obtain_only_relevant_vectors(word_vectors):
-    '''To do: Complete to only obtain vectors for tokens provided in posts- saves memory in loading vectors related to task, but can lead to potential degradation in similarity scores'''
     ndims = word_vectors.vector_size
     res_vectors = []
     words_done = []
@@ -86,15 +85,10 @@ def obtain_only_relevant_vectors(word_vectors):
             f.write("{} {}\n".format(str(word_vec_tuple[0]), ' '.join(vec)))
 
 
-def bin_existing_questions():
-    '''To do: Bin precomputed similar questions together to save time in similarity calculation '''
-    None
-
-
 def get_wnet_wordtag(word_tag):
-    if(word_tag.startswith('N')):
+    if (word_tag.startswith('N')):
         return 'n'
-    if(word_tag.startswith('V')):
+    if (word_tag.startswith('V')):
         return 'v'
     if (word_tag.startswith('J')):
         return 'a'
@@ -105,7 +99,7 @@ def get_wnet_wordtag(word_tag):
 
 def get_synonyms_wnet(word, word_tag):
     wnet_tag = get_wnet_wordtag(word_tag)
-    if(wnet_tag is None):
+    if (wnet_tag is None):
         return None  # no synonyms
     try:
         return wn.synsets(word, wnet_tag)[0]
@@ -113,18 +107,17 @@ def get_synonyms_wnet(word, word_tag):
         return None  # no synonym found
 
 
-        
 def question_similarity_wnet(q1, q2, symm=True):
     '''
     Inputs q1, q2 are assumed to be cleaned string tokens lists representing questions
     '''
-    if(symm):
+    if (symm):
         return (question_similarity_wnet(q1, q2, False) + question_similarity_wnet(q2, q1, False)) / 2
     '''Tokenization and tagging'''
-    
+
     q1_tagged = pos_tag(q1)
     q2_tagged = pos_tag(q2)
- 
+
     '''Obtain synonyms'''
     synsets1 = [get_synonyms_wnet(*word_and_tag) for word_and_tag in q1_tagged]
     synsets2 = [get_synonyms_wnet(*word_and_tag) for word_and_tag in q2_tagged]
@@ -147,11 +140,11 @@ def question_similarity_wnet(q1, q2, symm=True):
 
 from gensim.models.keyedvectors import KeyedVectors
 '''
-Learn word vectors through pretrained and continue training to obtain data specific word embeddings--> resolves issue with unknown words
-Then use wmd implementation and  simple averaged vector representation
+Learn word vectors through pretrained and continue training to obtain data specific word embeddings --> resolves issue with unknown words. Then, use wmd implementation and simple averaged vector representation.
 '''
 word_vectors_loaded = False
 try:
+    print("Loading word vectors...")
     word_vectors = KeyedVectors.load_word2vec_format(vectors_dir, binary=False)
     ndims = word_vectors.vector_size
     word_vectors_loaded = True
@@ -161,6 +154,7 @@ except:
 
 np.random.seed(5)
 out_of_vocab_wordvec = np.random.random((1, ndims))
+
 
 def get_sen_vector(tokenized_cleaned_sentence_list, reduced_by_words=True):
     '''
@@ -173,7 +167,7 @@ def get_sen_vector(tokenized_cleaned_sentence_list, reduced_by_words=True):
             sentence_vector_1[i] = word_vectors[token]
         except:
             sentence_vector_1[i] = out_of_vocab_wordvec
-    if(reduced_by_words):
+    if (reduced_by_words):
         sentence_vector_averaged_by_words = np.mean(sentence_vector_1, axis=0)
         return sentence_vector_averaged_by_words
     else:
@@ -192,7 +186,7 @@ def activation(x):
 
 def word_mov_distance(q1_list, q2_list):
     '''Inputs are q1 and q2 clean tokenized lists'''
-    if(word_vectors_loaded):
+    if (word_vectors_loaded):
         return word_vectors.wmdistance(q1_list, q2_list)
     else:
         return 0
@@ -200,7 +194,7 @@ def word_mov_distance(q1_list, q2_list):
 
 def avg_w2v(q1, q2):
     '''Inputs are q1 and q2 clean tokenized lists'''
-    if(not word_vectors_loaded):
+    if (not word_vectors_loaded):
         return 0
     s1 = get_sen_vector(q1)
     s2 = get_sen_vector(q2)
@@ -215,12 +209,12 @@ def get_similarity(q1, q2, print_out=False):
     similarity_w2v = avg_w2v(q1, q2)
     similarity_wmd = activation(1 / (word_mov_distance(q1, q2) + 1e-10))
     similarity_wordnet = question_similarity_wnet(q1, q2)
-    if(print_out):
+    if (print_out):
         print("Similarity score word2vec averaged vectors: {}".format(similarity_w2v))
         print("Similarity score word mover distance: {}".format(similarity_wmd))
         print("Similarity wordnet: {}".format(similarity_wordnet))
     try:
-        if(word_vectors_loaded):
+        if (word_vectors_loaded):
             average_similarity = 0.43 * similarity_wmd + 0.42 * similarity_wordnet + 0.15 * similarity_w2v
         else:
             average_similarity = similarity_wordnet
@@ -236,29 +230,31 @@ def most_similar_to_q(q1, k=5, need_qs=False):
     print("Most similar {} questions:\n".format(k))
     count = 0
     for sim_id, sim_score in similarity_scores:
-        if(count > k):
+        if (count > k):
             break
         print("{}".format(''.join(['*'] * 50)))
-        print("Q_id:{}\n --------------------------\n {} \n Similarity score:{}".format(sim_id,
-                                                                                        all_existing_questions_list[sim_id], sim_score))
-        if(sim_score > 0.9):
-            print("Possible duplicate")
+        print("Question ID:{}\n --------------------------\n {} \n Similarity score:{}"
+              .format(sim_id,
+                      all_existing_questions_list[sim_id],
+                      sim_score))
+        if (sim_score > 0.9):
+            print("Possible duplicate!")
         count += 1
-    if(need_qs):
+    if (need_qs):
         return [(all_existing_questions_list[sim_id], sim_score) for sim_id, sim_score in similarity_scores]
 
 
 def main():
     choice = 1
     while(True):
-        choice = int(input("1: Enter question;  -1 Exit program\n"))  # supply list of questions
-        if(choice == -1):
+        choice = int(input("1: Enter Question; -1: Exit Program\n"))  # supply list of questions
+        if (choice == -1):
             # user exit
             break
-        if(choice == 1):
-            ques = input("Enter question: ")
-            k = 5 # number of similar questions to find
-            print("......Finding {} most similar questions and possible duplicates .....".format(k))
+        if (choice == 1):
+            ques = input("Enter Question: ")
+            k = 5  # number of similar questions to find
+            print("......Finding {} most similar questions and possible duplicates......".format(k))
             most_similar_to_q(ques)
 
 
