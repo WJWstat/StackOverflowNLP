@@ -4,8 +4,8 @@ code: 864
 like: 688
 using: 684
 would: 681
-one: 506
 way: 506
+one: 506
 method: 426
 class: 424
 need: 418
@@ -15,6 +15,6 @@ get: 379
 want: 366
 could: 356
 used: 339
-example: 316
 object: 316
+example: 316
 file: 314
