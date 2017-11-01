@@ -5,6 +5,11 @@ import html
 import re
 import time
 from nltk import word_tokenize, pos_tag
+try:
+    from nltk.corpus import wordnet as wn
+except:
+    nltk.download("wordnet")
+    from nltk.corpus import wordnet as wn
 
 vectors_dir = "application/task_relevant_vectors.txt"
 
@@ -20,7 +25,11 @@ def test_nltk_packages():
     except:
         nltk.download("averaged_perceptron_tagger")
         tags = pos_tag(tokens)
-        
+    try:
+        synsets = wn.synsets('world','n')[0]
+    except:
+        nltk.download("wordnet")
+        synsets = wn.synsets('world','n')[0]
 test_nltk_packages() 
 
 def get_stop_words(directory="data_analysis/stop_words.txt"):
@@ -57,11 +66,6 @@ def get_all_existing_questions(directory="pickles/threads.pkl"):  # give the thr
     qs = [clean_q(threads[i][0]['Body']) for i in threads.keys()]
     return qs
 
-try:
-    from nltk.corpus import wordnet as wn
-except:
-    nltk.download("wordnet")
-    from nltk.corpus import wordnet as wn
 
 def obtain_only_relevant_vectors(word_vectors):
     '''To do: Complete to only obtain vectors for tokens provided in posts- saves memory in loading vectors related to task, but can lead to potential degradation in similarity scores'''
