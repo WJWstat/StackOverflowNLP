@@ -1,20 +1,28 @@
 import re
 import pickle
 
+# global variables for evaluating the tokenizer
 true_negatives = 0
 true_positives = 0
 
+# load list of all programming languages and emoticons
 with open('tokenization/custom_tokenizer/programming_languages.txt', 'r') as file:
     langs = file.read().split()
 
 with open('tokenization/custom_tokenizer/text_emoticons.txt', 'r') as file:
     emoticons = file.read().split()
 
-
+# python wrapper for compiling rule based tokenizers defined below
 def _matches(regex):
-    """Regular expression compiling function decorator."""
+    """
+    Regular expression compiling function decorator.
+    Input: regex, function
+    Output: Wrapped function
+    """
     def match_decorator(fn):
+        # compile the regular expression
         automaton = re.compile(regex, 32)
+        # function wrappings for the class methods
         fn.split = automaton.split
         fn.match = automaton.match
         fn.search = automaton.search
@@ -22,15 +30,16 @@ def _matches(regex):
 
     return match_decorator
 
-
+# return a list of space separated tokens from a sentence
 @_matches(r'\s+')
 def space_tokenizer(sentence):
+    # __FT__ is a marker for evaluating the tokenizer
     if not re.match(r'.*(__FT__).*', sentence):
         return [token for token in space_tokenizer.split(sentence) if token]
     else:
         return [sentence]
 
-
+# returns a list of tokenized code blocks 
 @_matches(r'(<code>.*?<\/code>)')
 def code_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
@@ -38,7 +47,7 @@ def code_tokenizer(sentence):
     else:
         return [sentence]
 
-
+# returns a list of tokenized URLs
 @_matches(r'(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})')
 def url_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
@@ -46,7 +55,7 @@ def url_tokenizer(sentence):
     else:
         return [sentence]
 
-
+# returns list of tokenized non alpha-numerals
 @_matches(r'(\W)')
 def non_alphanum_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
@@ -54,7 +63,7 @@ def non_alphanum_tokenizer(sentence):
     else:
         return [sentence]
 
-
+# returns list of tokenized package names
 @_matches(r'([A-Za-z][A-Za-z0-9_]*(\.[a-z0-9_]+)+[0-9a-z_A-Z])')
 def package_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
@@ -62,7 +71,7 @@ def package_tokenizer(sentence):
     else:
         return [sentence]
 
-
+# returns list of filepath names
 @_matches(r'((.*)?(\/[^/\n ]*)+\/?\n?)')
 def filepath_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
@@ -70,7 +79,7 @@ def filepath_tokenizer(sentence):
     else:
         return [sentence]
 
-
+# returns list of numeric tokens
 @_matches(r'(([+|-]?\d+)?\.((\d+)|[\w]))')
 def decimal_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
@@ -78,7 +87,7 @@ def decimal_tokenizer(sentence):
     else:
         return [sentence]
 
-
+# returns list of contractions such as apostrophes and other clitics
 @_matches(r'(\S+\'\S+)')
 def contraction_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
@@ -86,7 +95,7 @@ def contraction_tokenizer(sentence):
     else:
         return [sentence]
 
-
+# returns list of abbreviated words such as e.g.
 @_matches(r'([a-zA-z]\.([a-zA-z]\.)+)')
 def abbreviation_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
@@ -94,7 +103,7 @@ def abbreviation_tokenizer(sentence):
     else:
         return [sentence]
 
-
+# returns list of ellipsis and brackets tokens such as ... and []
 @_matches(r'(\.\.\.|->|[(){}\[\],])')
 def ellipsis_bracket_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
@@ -102,7 +111,7 @@ def ellipsis_bracket_tokenizer(sentence):
     else:
         return [sentence]
 
-
+# returns list of tokens separated by /
 @_matches(r'(^[^\/]+[\/][^\/]+$)')
 def eitheror_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
@@ -110,7 +119,7 @@ def eitheror_tokenizer(sentence):
     else:
         return [sentence]
 
-
+# returns list of tokens separated by a period
 @_matches(r'(.*\.[\s]*$)+')
 def period_tokenizer(sentence):
     if not re.match(r'.*(__FT__).*', sentence):
@@ -119,11 +128,11 @@ def period_tokenizer(sentence):
     else:
         return [sentence]
 
-
+# mark tokens with __FT__ marker for evaluating the tokenizer
 def mark_tokens(tokens, filter):
     return ['__FT__' + token if filter(token) and '__FT__' not in token else token for token in tokens]
 
-
+# handle special clitics in the tokens
 def handle_clitics(token):
     tokens = []
     if token[-1].lower() == 's' and token[-2] in ["'"]:
@@ -149,8 +158,10 @@ def custom_tokenizer(text):
     global true_positives
     global true_negatives
 
+    # tokenize based on code blocks
     code_tokenized = code_tokenizer(text)
 
+    # separate tokens based on space
     space_tokenized = []
     for token in code_tokenized:
         if not code_tokenizer.match(token):
@@ -158,16 +169,20 @@ def custom_tokenizer(text):
         else:
             space_tokenized.append(token)
 
+    # get emoticons and language tokens
     emoticon_and_lang_marked_tokens = mark_tokens(space_tokenized, lambda token: token.lower(
     ) in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
 
+    # get ellipses and brackets
     ellipsis_bracket_tokenized = []
     for token in emoticon_and_lang_marked_tokens:
         ellipsis_bracket_tokenized.extend(ellipsis_bracket_tokenizer(token))
 
+    # handle special period tokens
     special_periods_tokens = mark_tokens(ellipsis_bracket_tokenized, lambda token: token.lower() in
                                          ['e.g.', 'i.e.', '...', 'etc.'])
 
+    # get period tokens
     period_tokenized = []
     for token in special_periods_tokens:
         if not code_tokenizer.match(token) and period_tokenizer.match(token):
@@ -176,16 +191,19 @@ def custom_tokenizer(text):
         else:
             period_tokenized.append(token)
 
+    # get emoticon and language marked tokens
     emoticon_and_lang_marked_tokens = mark_tokens(period_tokenized, lambda token: token.lower(
     ) in emoticons or token.lower() in langs or code_tokenizer.match(token) is not None)
 
-    constraction_tokenized = []
+    # get contractions 
+    contraction_tokenized = []
     for token in emoticon_and_lang_marked_tokens:
         if contraction_tokenizer.match(token) is not None:
-            constraction_tokenized.extend(['__FT__' + sub_token for sub_token in handle_clitics(token)])
+            contraction_tokenized.extend(['__FT__' + sub_token for sub_token in handle_clitics(token)])
         else:
-            constraction_tokenized.append(token)
+            contraction_tokenized.append(token)
 
+    # helper function to check token
     def to_be_filtered(sub_token):
         checklist = [
             ellipsis_bracket_tokenizer.match(sub_token) is None,
@@ -197,8 +215,10 @@ def custom_tokenizer(text):
         ]
         return False in checklist
 
-    filter_marked_tokens = mark_tokens(constraction_tokenized, to_be_filtered)
+    # filter tokens
+    filter_marked_tokens = mark_tokens(contraction_tokenized, to_be_filtered)
 
+    # get non alpha-numerical tokens
     non_alphanum_tokenized = []
     for token in filter_marked_tokens:
         non_alphanum_tokenized.extend(non_alphanum_tokenizer(token))
@@ -210,6 +230,7 @@ def custom_tokenizer(text):
         else:
             eitheror_tokenized.append(token)
 
+    # evaluate tokenizer
     clean_tokens = []
     for token in eitheror_tokenized:
         if token.find('__FT__') >= 0:
@@ -247,11 +268,12 @@ def tokenize():
         complete_token_list.extend(tokens)
         post_no += 1
 
+    # print results of tokenizer
     print('Total Number of Tokens: ', len(complete_token_list))
     print('Positives: ', true_positives)
     print('Negatives: ', true_negatives)
 
-    # Pickle data.
+    # pickle data
     with open('pickles/tokens.pkl', 'wb') as f:
         pickle.dump(complete_token_list, f)
 

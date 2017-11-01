@@ -146,12 +146,10 @@ def question_similarity_wnet(q1, q2, symm=True):
 
 
 from gensim.models.keyedvectors import KeyedVectors
-'''Learn word vectors through pretrained and continue training to obtain data specific word embeddings--> resolves issue with
-unknown words
-Then use wmd implementation
-and  simple averaged vector representation
 '''
-#'''
+Learn word vectors through pretrained and continue training to obtain data specific word embeddings--> resolves issue with unknown words
+Then use wmd implementation and  simple averaged vector representation
+'''
 word_vectors_loaded = False
 try:
     word_vectors = KeyedVectors.load_word2vec_format(vectors_dir, binary=False)
@@ -159,30 +157,22 @@ try:
     word_vectors_loaded = True
     print("Loaded word vectors")
 except:
-
     print("Failed in loading word vectors")
-#'''
 
 np.random.seed(5)
 out_of_vocab_wordvec = np.random.random((1, ndims))
-# out_of_vocab_wordvec = [np.random.random((1,ndims)) for i in range(8)]
-# #THIS is an assumption, may deteriorate accuracy
-
 
 def get_sen_vector(tokenized_cleaned_sentence_list, reduced_by_words=True):
-
+    '''
+    Get sentence vector averaged by words
+    '''
     sentence_vector_1 = np.zeros((len(tokenized_cleaned_sentence_list), ndims))
     count_out_of_vocab = 0
     for i, token in enumerate(tokenized_cleaned_sentence_list):
         try:
             sentence_vector_1[i] = word_vectors[token]
         except:
-            # word not in vocab<-- very weak assumption to solve problem
-            #sentence_vector_1[i] = tokenized_cleaned_sentence_list[i-1]+tokenized_cleaned_sentence_list[i+1] /2
-            # if(count_out_of_vocab >= len(out_of_vocab_wordvec)):
-             #   count_out_of_vocab = 0
             sentence_vector_1[i] = out_of_vocab_wordvec
-            #count_out_of_vocab += 1
     if(reduced_by_words):
         sentence_vector_averaged_by_words = np.mean(sentence_vector_1, axis=0)
         return sentence_vector_averaged_by_words
@@ -196,13 +186,12 @@ def cosine_similarity(vec1, vec2):
 
 
 def activation(x):
+    '''Formula for activation function'''
     return 1 / (1 + np.exp(-x))
 
 
 def word_mov_distance(q1_list, q2_list):
     '''Inputs are q1 and q2 clean tokenized lists'''
-    # if(not word_vectors_loaded):
-    #   return 0
     if(word_vectors_loaded):
         return word_vectors.wmdistance(q1_list, q2_list)
     else:
@@ -219,24 +208,19 @@ def avg_w2v(q1, q2):
 
 
 def get_similarity(q1, q2, print_out=False):
-
+    # retrieve cleaned and tokenized questions
     q1, q2 = clean_text_and_tokenize(q1), clean_text_and_tokenize(q2)
-    # Would be better to retrieve existing questions tokenized
-    # And also store similarity binned questions, and limit search space for new questions
 
+    # determine similarity scores of the questions using word2vec, word_move_distance and wordnet
     similarity_w2v = avg_w2v(q1, q2)
-    #similarity_siamese = siamese(q1,q2)
-    # ((-np.log(sigmoid(wmd(q1,q2)+4)))#activation calculate log(1/x) since curve is a better representation
     similarity_wmd = activation(1 / (word_mov_distance(q1, q2) + 1e-10))
     similarity_wordnet = question_similarity_wnet(q1, q2)
     if(print_out):
-        #print("Similarity siamese: {}".format(similarity_siamese))
         print("Similarity score word2vec averaged vectors: {}".format(similarity_w2v))
         print("Similarity score word mover distance: {}".format(similarity_wmd))
         print("Similarity wordnet: {}".format(similarity_wordnet))
     try:
         if(word_vectors_loaded):
-            # + 0.8*similarity_siamese #Restricting between 0 and 1 doesn't matter as final result is comparitive but is helpful for evaluation of individual functions
             average_similarity = 0.43 * similarity_wmd + 0.42 * similarity_wordnet + 0.15 * similarity_w2v
         else:
             average_similarity = similarity_wordnet
@@ -267,12 +251,13 @@ def most_similar_to_q(q1, k=5, need_qs=False):
 def main():
     choice = 1
     while(True):
-        choice = int(input("1: enter question;  -1 exit program\n"))  # 2: Supply list of questions
+        choice = int(input("1: Enter question;  -1 Exit program\n"))  # supply list of questions
         if(choice == -1):
+            # user exit
             break
         if(choice == 1):
             ques = input("Enter question: ")
-            k = 5  # int(input("Enter number of similar questions to find")
+            k = 5 # number of similar questions to find
             print("......Finding {} most similar questions and possible duplicates .....".format(k))
             most_similar_to_q(ques)
 

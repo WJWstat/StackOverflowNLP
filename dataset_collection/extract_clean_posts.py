@@ -2,6 +2,7 @@ import pickle
 import re
 import html
 
+# load pickled data
 with open('pickles/threads.pkl', 'rb') as f:
     threads = pickle.load(f)
 

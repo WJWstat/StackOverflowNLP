@@ -25,7 +25,7 @@ for event, elem in ET.iterparse('data/uncompressed/Posts.xml'):
     if elem.tag == 'row':
         attr = elem.attrib
 
-        # Add question post if it has needed tag & enough answers.
+        # Add question post if it has the needed tag & enough answers.
         if attr['PostTypeId'] == '1' and attr['Tags'].find(tag) != -1 and int(attr['AnswerCount']) >= 1:
             threads[attr['Id']] = []
             threads[attr['Id']].append(attr)
