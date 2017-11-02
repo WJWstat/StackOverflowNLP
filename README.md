@@ -116,3 +116,7 @@ Depending on the underlying processor, finding duplicate questions may take anyw
 - pyemd v0.4.4 (https://github.com/wmayner/pyemd) 
 
 > Please note that these Python packages may depend on other Python packages, so it is advised to simply use the `pip` command described in **Setup** above.
+
+****
+
+***Disclaimer:*** This repo is no longer maintained and was submitted as part of the coursework assignment for CZ 4045 Natural Language Processing at NTU in AY 17/18 Semester 1.
