@@ -2,9 +2,17 @@
 
 This repository contains the source code used to perform basic NLP tasks on posts extracted from Stack Overflow.
 
+### Team
+
+1. Suyash Lakhotia ([SuyashLakhotia](https://github.com/SuyashLakhotia))
+2. Nikhil Venkatesh ([nikv96](https://github.com/nikv96))
+3. Shantanu Jaiswal ([shantanuj](https://github.com/shantanuj))
+4. Jacob Sunny ([jacobsunny1995](https://github.com/jacobsunny1995))
+5. Shantanu Kamath ([ShantanuKamath](https://github.com/ShantanuKamath))
+
 ## Setup
 
-This project is entirely written in [Python 3](https://www.python.org/downloads/) and depends on the packages listed in `requirements.txt`. In order to setup your development environment, please run:
+This project is entirely written in [Python 3](https://www.python.org/downloads/) and depends on the packages listed in `requirements.txt`. In order to setup your development environment, run:
 
 ```
 $ pip install -r requirements.txt
@@ -12,7 +20,7 @@ $ pip install -r requirements.txt
 
 You can also find a complete list of dependencies at the end of this document.
 
-You will also need to download the NLTK pickled models and corpora that our project depends on. On a Python interpreter, enter the following:
+You will also need to download a few NLTK pickled models and corpora (`punkt`, `averaged_perceptron_tagger`, `wordnet`) that our project depends on. On a Python interpreter, run the following:
 
 ```
 >>> import nltk
@@ -21,11 +29,11 @@ You will also need to download the NLTK pickled models and corpora that our proj
 >>> nltk.download('wordnet')
 ```
 
-## How To Run?
+## Running StackOverflowNLP
 
 ### Dataset Collection
 
-The first step is to download the Stack Overflow data dump (i.e. `stackoverflow.com-Posts.7z`) from [here](https://archive.org/details/stackexchange) and uncompress the file. Set the filepath to the uncompressed `Posts.xml` file in `dataset_collection/retrieve_threads.py` and run the following:
+The first step is to download the Stack Overflow data dump (i.e. `stackoverflow.com-Posts.7z`) from [Internet Archive](https://archive.org/details/stackexchange) and uncompress the file. Set the `filepath` variable in `dataset_collection/retrieve_threads.py` to point to the uncompressed `Posts.xml` and run the following:
 
 ```
 $ python dataset_collection/retrieve_threads.py
@@ -62,13 +70,17 @@ The token definition can be found in `tokenization/annotation/token_definition.t
 
 The actual custom tokenizer built based on regular expression rules, is implemented in `tokenization/custom_tokenizer/tokenizer.py`. A sample tokenized sentence is shown below:
 
+**Original Sentence:**
+
 ```
 Maybe this might help: JSefa
 
 You can read CSV file with this tool and serialize it to XML.
+```
 
-------------------------------------------------------------------------
+**Tokens Extracted:**
 
+```
 ["Maybe", "this", "might", "help", ":", "JSefa", "You", "can", "read", "CSV", "file", "with", "this", "tool", "and", "serialize", "it", "to", "XML", "."]
 ```
 
@@ -78,21 +90,21 @@ Further analysis is performed by investigating irregular tokens (i.e. non-Englis
 
 ### Application: Detecting Question Similarity
 
-Our application computes question similarity by using a weighted ensemble of WordNet synonym distance, word vector distance and word mover's distance. 
+Given a question, our application outputs similar questions (and possible duplicates) by using a weighted ensemble of WordNet synonym distance, word vector distance and word mover's distance.
 
 We obtain Stack Exchange specific word vectors from [AskUbuntu](https://github.com/taolei87/askubuntu), and further prune it (to save memory) by only including word vectors for words in our corpus' vocabulary.
 
 Our application's source code is located in `application/application.py`.
 
-To use the application with terminal interface, run:
+To use the application, run:
 
 ```
 $ python application/application.py
 ```
 
-Upon running, either enter `1` to enter a question to find potential duplicates or enter `-1` to exit the program.
+Upon running, either enter `1` to enter a question or `-1` to exit the program when the application prompts for an instruction.
 
-Depending on the underlying processor, finding the duplicate questions may take a time range of 10 seconds to 1 minute.
+Depending on the underlying processor, finding duplicate questions may take anywhere between 10 seconds and 1 minute.
 
 ## Dependencies
 
