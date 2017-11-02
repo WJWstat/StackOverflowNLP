@@ -4,7 +4,9 @@ import pickle
 import html
 import re
 import time
+import os
 from nltk import word_tokenize, pos_tag
+
 try:
     from nltk.corpus import wordnet as wn
 except:
@@ -17,7 +19,7 @@ vectors_dir = "application/task_relevant_vectors.txt"
 def test_nltk_packages():
     test_string = "Hello world"
     try:
-        tokens = word_tokenize(test_string)  # replace with our own if needed
+        tokens = word_tokenize(test_string)
     except:
         nltk.download('punkt')
         tokens = word_tokenize(test_string)

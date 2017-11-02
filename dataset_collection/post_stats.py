@@ -2,8 +2,13 @@ import pickle
 import re
 import matplotlib.pyplot as plt
 import nltk
+import os
 
 # load pickled posts
+if not os.path.exists('pickles/posts.pkl'):
+    print('Please run extract_clean_posts.py to generate pickled file. Exiting...')
+    exit(0)
+    
 with open('pickles/posts.pkl', 'rb') as f:
     posts = pickle.load(f)
 
@@ -19,6 +24,9 @@ for post in posts:
         post_length[len(words)] = 1
 
 # plot token count
+if not os.path.exists('plots/'):
+    os.makedirs('plots/')
+
 plt.figure()
 plt.bar(list(post_length.keys()), list(post_length.values()), width=1.0)
 plt.xlabel('Word Count')

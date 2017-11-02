@@ -1,8 +1,13 @@
 import re
 import pickle
 import nltk
+import os
 
 # Load pickle
+if not os.path.exists('pickles/posts.pkl'):
+    print('Please run extract_clean_posts.py to generate pickled file. Exiting...')
+    exit(0)
+
 with open('pickles/posts.pkl', 'rb') as f:
     posts = pickle.load(f)
 
@@ -38,5 +43,8 @@ with open('data_analysis/sentences_pos_tags.txt', 'w') as f:
         f.write('\n----\n' + '\n')
 
 # pickle data
+if not os.path.exists('pickles/'):
+    os.makedirs('pickles/')
+
 with open('pickles/pos_tags.pkl', 'wb') as f:
     pickle.dump(pos_tags, f)

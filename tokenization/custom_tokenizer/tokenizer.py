@@ -1,5 +1,6 @@
 import re
 import pickle
+import os
 
 # global variables for evaluating the tokenizer
 true_negatives = 0
@@ -246,6 +247,10 @@ def custom_tokenizer(text):
 
 
 def tokenize():
+    if not os.path.exists('pickles/posts.pkl'):
+        print('Please run extract_clean_posts.py to generate pickled file. Exiting...')
+        exit(0)
+
     with open('pickles/posts.pkl', 'rb') as f:
         posts = pickle.load(f)
 
@@ -274,6 +279,9 @@ def tokenize():
     print('Negatives: ', true_negatives)
 
     # pickle data
+    if not os.path.exists('pickles/posts.pkl'):
+        os.makedirs('pickles/')
+
     with open('pickles/tokens.pkl', 'wb') as f:
         pickle.dump(complete_token_list, f)
 

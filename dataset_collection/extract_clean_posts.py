@@ -1,8 +1,13 @@
 import pickle
 import re
 import html
+import os
 
 # load pickled data
+if not os.path.exists('pickles/threads.pkl'):
+    print('Please run retrieve_threads.py to generate pickled file. Exiting...')
+    exit(0)
+    
 with open('pickles/threads.pkl', 'rb') as f:
     threads = pickle.load(f)
 
@@ -23,5 +28,8 @@ for i in range(len(posts)):
     posts[i] = html.unescape(posts[i])  # unescape HTML entities (e.g. &amp;)
 
 # Pickle data.
+if not os.path.exists('pickles/'):
+    os.makedirs('pickles/')
+    
 with open('pickles/posts.pkl', 'wb') as f:
     pickle.dump(posts, f)

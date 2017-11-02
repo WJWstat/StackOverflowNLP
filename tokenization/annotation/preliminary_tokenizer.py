@@ -1,7 +1,12 @@
 import re
 import pickle
+import os
 
 # load pickled data
+if not os.path.exists('pickles/posts.pkl'):
+    print('Please run extract_clean_posts.py to generate pickled file. Exiting...')
+    exit(0)
+
 with open('pickles/posts.pkl', 'rb') as f:
     posts = pickle.load(f)
 

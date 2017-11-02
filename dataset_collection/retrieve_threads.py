@@ -1,5 +1,6 @@
 import pickle
 import xml.etree.ElementTree as ET
+import os
 
 # Useful XML Attributes & Values in Posts.xml (non-exhaustive list):
 #
@@ -54,5 +55,7 @@ for question_id, posts in list(threads.items()):
         del threads[question_id]
 
 # Pickle data.
+if not os.path.exists('pickles/'):
+    os.makedirs('pickles/')
 with open('pickles/threads.pkl', 'wb') as f:
     pickle.dump(threads, f)

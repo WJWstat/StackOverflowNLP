@@ -3,6 +3,7 @@ import enchant
 import re
 import nltk
 from tokenizer import custom_tokenizer
+import os
 
 d = enchant.Dict('en_US')
 clitics = set(["'s", "n't", "'ll", "'d", "'m", "'ve", "'re"])
@@ -13,6 +14,10 @@ def check_irregularity(token):
 
 
 def get_irregular_token_stats():
+    if not os.path.exists('pickles/tokens.pkl'):
+        print('Please run tokenizer.py to generate pickled file. Exiting...')
+        exit(0)
+
     with open('pickles/tokens.pkl', 'rb') as f:
         tokens = pickle.load(f)
 
@@ -28,6 +33,9 @@ def get_irregular_token_stats():
 
 
 def pos_tag_sentences():
+    if not os.path.exists('pickles/posts.pkl'):
+        print('Please run extract_clean_posts.py to generate pickled file. Exiting...')
+        exit(0)
     with open('pickles/posts.pkl', 'rb') as f:
         posts = pickle.load(f)
 
@@ -67,6 +75,9 @@ def pos_tag_sentences():
             f.write(str(key) + '\n')
             f.write(str(pos_tags[key]) + '\n')
             f.write('\n----\n' + '\n')
+
+    if not os.path.exists('pickles/'):
+        os.makedirs('pickles/')
 
     with open('pickles/pos_tags_custom.pkl', 'wb') as f:
         pickle.dump(pos_tags, f)
