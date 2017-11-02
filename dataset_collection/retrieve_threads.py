@@ -13,6 +13,8 @@ import xml.etree.ElementTree as ET
 #
 # 37,215,530 lines. 37,215,527 post <row>s.
 
+filepath = 'data/uncompressed/Posts.xml'
+
 threads_threshold = 500
 tag = '<java>'  # ET parses &lt; and &gt;
 
@@ -21,7 +23,7 @@ threads = {}
 num_of_threads = 0
 
 # Get threads from XML file.
-for event, elem in ET.iterparse('data/uncompressed/Posts.xml'):
+for event, elem in ET.iterparse(filepath):
     if elem.tag == 'row':
         attr = elem.attrib
 
